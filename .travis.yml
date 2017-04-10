@@ -1,6 +1,8 @@
 language: scala
 scala: 2.11.8
 jdk: oraclejdk8
+before_script: cd StressTester
 script:
  - sbt -jvm-opts travis/jvmopts.compile ... compile
  - sbt -jvm-opts travis/jvmopts.test ... test
+ 
