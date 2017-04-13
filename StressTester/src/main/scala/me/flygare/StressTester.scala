@@ -1,40 +1,34 @@
 package me.flygare
 import org.apache.spark.sql.cassandra._
-import com.datastax.spark.connector._
-import org.apache.spark.sql.Dataset
-import org.apache.spark.sql.execution.streaming.FileStreamSource.Timestamp
-import org.joda.time.{DateTime, DateTimeZone}
+
 import scala.util.Random
 
-
-case class KeyValue(id: Int, ts: String)
-
 object StressTester extends App with SparkConnection{
+  import spark.implicits._
+
   val datasetFormat = "org.apache.spark.sql.cassandra"
 
-  import spark.implicits._
+  def uuid: String = java.util.UUID.randomUUID.toString
 
   var keyValue: Seq[KeyValue] = Seq.empty
   var rows: Int = 0
-  while (rows < 10000) {
-    keyValue ++= Seq(KeyValue(Random.nextInt(1000), DateTime.now(DateTimeZone.UTC).toString()))
+  while (rows < 100) {
+    keyValue ++= Seq(KeyValue(uuid, Random.alphanumeric.toString))
     rows += 1
   }
 
-
-
-
   keyValue.toDS()
-    .write
-    .format(datasetFormat)
-    .options(Map( "table" -> "kv", "keyspace" -> "minopt"))
-    .mode("overwrite")
-    .cassandraFormat("keyValue", "minopt")
-    .save()
+  .write
+  .format(datasetFormat)
+  .options(Map("table" -> "key_value", "keyspace" -> "minopt"))
+  .mode("overwrite")
+  .save()
 
-  val df = spark
+  spark
     .read
-    .format("org.apache.spark.sql.cassandra")
-    .options(Map( "table" -> "keyValue", "keyspace" -> "minopt"))
-    .load().show()
+    .cassandraFormat("key_value", "minopt")
+    .load()
+    .show(truncate = false)
+
+
 }

@@ -26,7 +26,7 @@ trait SparkConnection {
   val keyspace = "minopt"
 
   session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
-  session.execute("CREATE TABLE IF NOT EXISTS " + keyspace + ".kv(id INT PRIMARY KEY, ts timestamp);")
+  session.execute("CREATE TABLE IF NOT EXISTS " + keyspace + ".key_value(key uuid PRIMARY KEY, content TEXT);")
 
   session.close()
 }
