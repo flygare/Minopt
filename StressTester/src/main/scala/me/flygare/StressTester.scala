@@ -1,8 +1,9 @@
 package me.flygare
+import com.datastax.spark.connector._
 
 object StressTester extends App with SparkConnection{
   print("Hello")
-  session.execute("INSERT INTO test.kv ")
-  val rdd = sc.cassandraTable("test", "kv")
-  println(rdd.count)
+
+  val rdd = Seq("a", "b", "c")
+  println(rdd.length)
 }
