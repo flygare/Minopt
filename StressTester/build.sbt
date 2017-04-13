@@ -2,11 +2,10 @@ val SparkPackageRepo = "Spark Packages Repo" at "https://dl.bintray.com/spark-pa
 val SparkCore = "org.apache.spark" % "spark-core_2.11" % "2.1.0"
 val SparkSql = "org.apache.spark" % "spark-sql_2.11" % "2.1.0"
 val SparkCassandraConnector = "com.datastax.spark" % "spark-cassandra-connector_2.11" % "2.0.1"
-val CassandraDriverCore = "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0"
 
 lazy val commonSettings = Seq(
   organization := "me.flygare",
-  version := "1",
+  version := "1.0",
   scalaVersion := "2.11.8"
 )
 
@@ -17,8 +16,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       SparkCassandraConnector,
       SparkCore,
-      SparkSql,
-      CassandraDriverCore
+      SparkSql
     ),
     resolvers += SparkPackageRepo,
     mainClass in (Compile,run) := Some(s"$organization.$name")
