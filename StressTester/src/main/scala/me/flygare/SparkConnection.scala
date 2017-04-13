@@ -14,6 +14,6 @@ trait SparkConnection {
 
   val connector = CassandraConnector(sc.getConf)
   var session = connector.openSession()
-  session.execute("CREATE KEYSPACE IF NOT EXISTS test WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
+  session.execute("CREATE KEYSPACE test WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
   session.execute("CREATE TABLE IF NOT EXISTS test.kv(id INT PRIMARY KEY, ts timestamp);")
 }
