@@ -1,9 +1,11 @@
 package me.flygare
 import com.datastax.spark.connector._
 
-object StressTester extends App with SparkConnection{
-  print("Hello")
+import com.datastax.spark.connector._
 
-  val rdd = Seq("a", "b", "c")
-  println(rdd.length)
+object StressTester extends App with SparkConnection{
+  println("Hello")
+
+  val rdd = sc.cassandraTable("minopt", "kv")
+  println("Cassanda rows: " + rdd.count)
 }
