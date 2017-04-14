@@ -1,8 +1,8 @@
-package me.flygare
+package me.flygare.traits
 
 import com.datastax.driver.core.Session
 import com.datastax.spark.connector.cql.CassandraConnector
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
 
 trait SparkConnection {
@@ -23,10 +23,10 @@ trait SparkConnection {
   val connector: CassandraConnector = CassandraConnector(spark.sparkContext)
   var session: Session = connector.openSession()
 
-  val keyspace = "minopt"
+  val Keyspace = "minopt"
 
-  session.execute("CREATE KEYSPACE IF NOT EXISTS " + keyspace + " WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
-  session.execute("CREATE TABLE IF NOT EXISTS " + keyspace + ".key_value(key uuid PRIMARY KEY, content TEXT);")
+  session.execute("CREATE KEYSPACE IF NOT EXISTS " + Keyspace + " WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
+  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".key_value(key uuid PRIMARY KEY, content TEXT);")
 
   session.close()
 }

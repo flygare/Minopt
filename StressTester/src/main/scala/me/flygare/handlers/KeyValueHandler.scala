@@ -1,13 +1,15 @@
-package me.flygare
+package me.flygare.handlers
 
+import me.flygare.models.KeyValue
+import me.flygare.traits.SparkConnection
+import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.cassandra._
-import me.flygare.StressTester.spark
-import org.apache.spark.sql.Row
-import spark.implicits._
 
-case class KeyValue(key: String, content: String)
 
 class KeyValueHandler {
+  val spark = SparkSession.builder.getOrCreate()
+  import spark.implicits._
+
   val TableName = "key_value"
   val Keyspace = "minopt"
   val TableOption = Map("table" -> TableName, "keyspace" -> Keyspace)
@@ -32,7 +34,7 @@ class KeyValueHandler {
   }
 
   def getKeyValue(key: String): KeyValue = {
-    val get =
+    val dbObj =
       spark
         .read
         .options(TableOption)
@@ -41,7 +43,7 @@ class KeyValueHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .collectAsList()
 
-    val keyValue: Row = get.get(0)
+    val keyValue: Row = dbObj.get(0)
     KeyValue(keyValue.getAs[String](0), keyValue.getAs[String](1))
   }
 }
