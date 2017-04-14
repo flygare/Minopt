@@ -27,6 +27,7 @@ trait SparkConnection {
 
   session.execute("CREATE KEYSPACE IF NOT EXISTS " + Keyspace + " WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
   session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".key_value(key uuid PRIMARY KEY, content TEXT);")
+  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".song(key uuid PRIMARY KEY, title TEXT, artist TEXT);")
 
   session.close()
 }

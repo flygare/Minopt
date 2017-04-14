@@ -1,27 +1,27 @@
 package me.flygare.handlers
 
-import me.flygare.models.KeyValue
-import me.flygare.traits.SparkConnection
+import me.flygare.models.Song
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.cassandra._
 
+class SongHandler {
+  val spark: SparkSession = SparkSession.builder.getOrCreate()
 
-class KeyValueHandler {
-  val spark = SparkSession.builder.getOrCreate()
   import spark.implicits._
 
-  val TableName = "key_value"
+  val TableName = "song"
   val Keyspace = "minopt"
   val TableOption = Map("table" -> TableName, "keyspace" -> Keyspace)
 
   val DatasetFormat: String = "org.apache.spark.sql.cassandra"
 
-  def createKeyValue(content: String): KeyValue = {
+
+  def createSong(title: String, artist: String): Song = {
     def UUID: String = java.util.UUID.randomUUID.toString
 
-    val createdKeyValue = KeyValue(UUID, content)
+    val createdSong = Song(UUID, title, artist)
 
-    Seq(createdKeyValue)
+    Seq(createdSong)
       .toDS()
       .write
       .format(DatasetFormat)
@@ -29,10 +29,10 @@ class KeyValueHandler {
       .mode("append")
       .save()
 
-    createdKeyValue
+    createdSong
   }
 
-  def getKeyValue(key: String): KeyValue = {
+  def getSong(key: String): Song = {
     val dbObj =
       spark
         .read
@@ -42,7 +42,7 @@ class KeyValueHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .collectAsList()
 
-    val keyValue: Row = dbObj.get(0)
-    KeyValue(keyValue.getAs[String](0), keyValue.getAs[String](1))
+    val song: Row = dbObj.get(0)
+    Song(song.getAs[String](0), song.getAs[String](1), song.getAs[String](2))
   }
 }
