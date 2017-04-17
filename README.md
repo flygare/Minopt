@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/flygare/Minopt.svg?branch=master)](https://travis-ci.org/flygare/Minopt)
-[![Coverage Status](https://coveralls.io/repos/github/flygare/Minopt/badge.svg?branch=master)](https://coveralls.io/github/flygare/Minopt?branch=master)
 # Minopt
 
 > Microservice architecture vs. monolithic architecture<br>
