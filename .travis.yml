@@ -5,5 +5,5 @@ env:
   - TEST_DIR=REST
   - TEST_DIR=DatabaseLogic
 script: cd $TEST_DIR && sbt assembly && sbt clean coverage test coverageReport
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+after_success: bash <(curl -s https://codecov.io/bash)
+services: cassandra
