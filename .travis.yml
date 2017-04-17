@@ -1,4 +1,7 @@
 language: scala
 scala: 2.11.8
 jdk: oraclejdk8
-before_script: cd DatabaseLogic
+env:
+  - TEST_DIR=REST
+  - TEST_DIR=DatabaseLogic
+script: cd $TEST_DIR && sbt assembly && sbt test
