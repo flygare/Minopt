@@ -4,6 +4,6 @@ jdk: oraclejdk8
 env:
   - TEST_DIR=REST
   - TEST_DIR=DatabaseLogic
-script: cd $TEST_DIR && sbt assembly && sbt test && sbt clean coverage test coverageReport
+script: cd $TEST_DIR && sbt assembly && sbt clean coverage test coverageReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
