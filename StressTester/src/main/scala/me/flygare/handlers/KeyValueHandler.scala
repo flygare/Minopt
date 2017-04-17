@@ -7,6 +7,7 @@ import org.apache.spark.sql.cassandra._
 
 class KeyValueHandler {
   val spark = SparkSession.builder.getOrCreate()
+
   import spark.implicits._
 
   val Keyspace = "minopt"
@@ -83,7 +84,39 @@ class KeyValueHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .collectAsList()
 
-    val keyValue = dbObj.get(0)
-    KeyValueTwo(keyValue.getAs[String](0), keyValue.getAs[String](1), keyValue.getAs[String](2))
+    val kV = dbObj.get(0)
+    KeyValueTwo(kV.getAs[String]("key"), kV.getAs[String]("col1"), kV.getAs[String]("col2"))
+  }
+
+  def getKVFive(key: String) = {
+    val dbObj =
+      spark
+        .read
+        .options(TableOptionFive)
+        .cassandraFormat(TableNameFive, Keyspace)
+        .load()
+        .filter(row => row.getAs[String]("key").equals(key))
+        .collectAsList()
+
+    val kV = dbObj.get(0)
+    KeyValueFive(kV.getAs[String]("key"),
+      kV.getAs[String]("col1"), kV.getAs[String]("col2"), kV.getAs[String]("col3"), kV.getAs[String]("col4"), kV.getAs[String]("col5"))
+  }
+
+  def getKVTen(key: String) = {
+    val dbObj =
+      spark
+        .read
+        .options(TableOptionTen)
+        .cassandraFormat(TableNameTen, Keyspace)
+        .load()
+        .filter(row => row.getAs[String]("key").equals(key))
+        .collectAsList()
+
+    val kV = dbObj.get(0)
+
+    KeyValueTen(kV.getAs[String]("key"),
+      kV.getAs[String]("col1"), kV.getAs[String]("col2"), kV.getAs[String]("col3"), kV.getAs[String]("col4"), kV.getAs[String]("col5"),
+      kV.getAs[String]("col6"), kV.getAs[String]("col7"), kV.getAs[String]("col8"), kV.getAs[String]("col9"), kV.getAs[String]("col10"))
   }
 }

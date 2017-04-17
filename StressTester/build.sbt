@@ -2,6 +2,8 @@ val SparkPackageRepo = "Spark Packages Repo" at "https://dl.bintray.com/spark-pa
 val SparkCore = "org.apache.spark" % "spark-core_2.11" % "2.1.0"
 val SparkSql = "org.apache.spark" % "spark-sql_2.11" % "2.1.0"
 val SparkCassandraConnector = "com.datastax.spark" % "spark-cassandra-connector_2.11" % "2.0.1"
+val ScalaTest = "org.scalatest" % "scalatest_2.11" % "3.0.1" % "test"
+
 
 lazy val commonSettings = Seq(
   organization := "me.flygare",
