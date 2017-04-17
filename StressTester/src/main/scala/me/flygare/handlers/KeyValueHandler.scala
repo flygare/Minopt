@@ -1,6 +1,6 @@
 package me.flygare.handlers
 
-import me.flygare.models.KeyValue
+import me.flygare.models.KeyValueTwo
 import me.flygare.traits.SparkConnection
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.cassandra._
@@ -10,39 +10,39 @@ class KeyValueHandler {
   val spark = SparkSession.builder.getOrCreate()
   import spark.implicits._
 
-  val TableName = "key_value"
+  val TableNameTwo = "key_value_two"
   val Keyspace = "minopt"
-  val TableOption = Map("table" -> TableName, "keyspace" -> Keyspace)
+  val TableOptionTwo = Map("table" -> TableNameTwo, "keyspace" -> Keyspace)
 
-  val DatasetFormat: String = "org.apache.spark.sql.cassandra"
+  val DatasetFormat = "org.apache.spark.sql.cassandra"
 
-  def createKeyValue(content: String): KeyValue = {
-    def UUID: String = java.util.UUID.randomUUID.toString
+  def createKVTwo(col1: String, col2: String): KeyValueTwo = {
+    val UUID = java.util.UUID.randomUUID.toString
 
-    val createdKeyValue = KeyValue(UUID, content)
+    val createdKeyValue = KeyValueTwo(UUID, col1, col2)
 
     Seq(createdKeyValue)
       .toDS()
       .write
       .format(DatasetFormat)
-      .options(TableOption)
+      .options(TableOptionTwo)
       .mode("append")
       .save()
 
     createdKeyValue
   }
 
-  def getKeyValue(key: String): KeyValue = {
+  def getKVTwo(key: String) = {
     val dbObj =
       spark
         .read
-        .options(TableOption)
-        .cassandraFormat(TableName, Keyspace)
+        .options(TableOptionTwo)
+        .cassandraFormat(TableNameTwo, Keyspace)
         .load()
         .filter(row => row.getAs[String]("key").equals(key))
         .collectAsList()
 
-    val keyValue: Row = dbObj.get(0)
-    KeyValue(keyValue.getAs[String](0), keyValue.getAs[String](1))
+    val keyValue = dbObj.get(0)
+    KeyValueTwo(keyValue.getAs[String](0), keyValue.getAs[String](1), keyValue.getAs[String](2))
   }
 }
