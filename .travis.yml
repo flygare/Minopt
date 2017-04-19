@@ -22,7 +22,3 @@ after_success:
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 services:
   - cassandra
-before_install:
-  - sudo service cassandra stop
-  - sudo service cassandra start
-  - sleep 5
