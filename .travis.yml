@@ -7,6 +7,8 @@ jdk:
 env:
   - TEST_DIR=REST
   - TEST_DIR=DatabaseLogic
+sudo:
+  - required
 script:
   - cd $TEST_DIR && sbt assembly && sbt clean coverage test coverageReport
 after_success:
