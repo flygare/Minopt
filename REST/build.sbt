@@ -1,5 +1,3 @@
-val colossus = "com.tumblr" %% "colossus" % "0.8.3"
-
 lazy val commonSettings = Seq(
   organization := "me.flygare",
   version := "1.0",
@@ -11,11 +9,17 @@ lazy val root = (project in file("."))
   .settings(
     commonSettings,
     name := "REST",
-    libraryDependencies += colossus,
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-http" % "10.0.3",
+      "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.3",
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.0.3"
+    ),
     resolvers += Resolver.sonatypeRepo("public"),
+    resolvers += "JBoss" at "https://repository.jboss.org/"
     mainClass in (Compile,run) := Some(s"$organization.$name"),
     mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "rest.jar"
   )
 
 enablePlugins(AssemblyPlugin)
+

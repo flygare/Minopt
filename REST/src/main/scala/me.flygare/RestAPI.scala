@@ -1,32 +1,24 @@
 package me.flygare
 
-import colossus._
-import core._
-import service._
-import protocols.http._
-import UrlParsing._
-import HttpMethod._
 import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.Directives._
 
-class HelloService(context: ServerContext) extends HttpService(context) {
-  def handle = {
-    case request @ Get on Root / "hello" => {
-      Callback.successful(request.ok("Hello World!"))
+object RestAPI extends App{
+
+  implicit val actorSystem = ActorSystem("system")
+  implicit val actorMaterializer = ActorMaterializer()
+
+  val route =
+    pathSingleSlash {
+      get {
+        complete {
+          "Hello world"
+        }
+      }
     }
-  }
-}
+  Http().bindAndHandle(route,"localhost",8080)
 
-class HelloInitializer(worker: WorkerRef) extends Initializer(worker) {
-
-  def onConnect = context => new HelloService(context)
-
-}
-
-object RestAPI extends App {
-
-  implicit val actorSystem = ActorSystem()
-  implicit val io = IOSystem()
-
-  Server.start("hello-world", 9000){ worker => new HelloInitializer(worker) }
-
+  println("server started at 8080")
 }
