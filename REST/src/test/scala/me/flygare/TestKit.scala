@@ -7,7 +7,6 @@ import akka.http.scaladsl.server._
 
 class TestKit extends WordSpec with Matchers with ScalatestRouteTest {
 
-
   "The service" should {
 
     "return a greeting for GET requests to the test path" in {
