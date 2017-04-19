@@ -16,8 +16,5 @@ after_success:
 services:
   - cassandra
 before_install:
-  - sudo rm -rf /var/lib/cassandra/*
-  - if [ ! -d "apache-cassandra-3.0.12" ]; then wget http://www.us.apache.org/dist/cassandra/3.0.12/apache-cassandra-3.0.12-bin.tar.gz && tar -xvzf apache-cassandra-3.0.12-bin.tar.gz; fi
-  - sudo sh ./apache-cassandra-3.0.12/bin/cassandra -R
   - sudo service cassandra start
   - sleep 5

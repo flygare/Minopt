@@ -8,7 +8,7 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file("."))
   .settings(
     commonSettings,
-    name := "StressTester",
+    name := "DatabaseLogic",
     libraryDependencies ++= Seq(
       "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1",
       "org.apache.spark" %% "spark-core" % "2.1.0",
