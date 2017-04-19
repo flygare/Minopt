@@ -6,8 +6,9 @@ import com.typesafe.config.ConfigFactory
 
 trait HttpConfig{
   val parsedConfig = ConfigFactory.parseFile(new File("src/main/resources/application.conf"))
+  val conf = ConfigFactory.load(parsedConfig)
 
-  val port = parsedConfig.getInt("http.local.port")
-  val interface = parsedConfig.getString("http.local.interface")
-  val remoteHost = parsedConfig.getString("http.remote.interface")
+  val port = conf.getInt("http.local.port")
+  val interface = conf.getString("http.local.interface")
+  val remoteHost = conf.getString("http.remote.interface")
 }
