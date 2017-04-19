@@ -15,6 +15,3 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
 services:
   - cassandra
-before_install:
-  - sudo service cassandra start
-  - sleep 5
