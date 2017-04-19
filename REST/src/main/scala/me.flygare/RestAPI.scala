@@ -1,16 +1,9 @@
 package me.flygare
 
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpRequest
+import me.flygare.utils.{HttpConfig, HttpConnection}
 
-object RestAPI extends App{
-
-  val port = 3000
-
-  implicit val actorSystem = ActorSystem("system")
-  implicit val actorMaterializer = ActorMaterializer()
+object RestAPI extends App with HttpConnection with HttpConfig{
 
   Http().bindAndHandle(MainRouter.routes,"localhost",port)
   println(s"Server started at $port")
