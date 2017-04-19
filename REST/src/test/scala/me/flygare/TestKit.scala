@@ -6,7 +6,7 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.server._
 import me.flygare.utils.HttpConfig
 
-class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig{
+class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
 
   "The service" should {
 
