@@ -8,13 +8,34 @@ import me.flygare.utils.HttpConnection
 
 object ApiRoute extends HttpConnection{
  val route =
-  path("api") {
-   get {
+  pathPrefix("api") {
+   path("json") {
     complete{
      val json = Http().singleRequest(HttpRequest(uri = "http://jsonplaceholder.typicode.com/posts/1"))
 
      json
     }
-   }
+   }~
+    pathPrefix("kv") {
+      path("2"){
+        get {
+          // Send request to get all data of 2 columns
+          complete("2 columns")
+        }~
+        post {
+          entity(as[String]){
+            data => complete(s"The data you sent were: $data")
+          }
+        }
+      }~
+      path("5"){
+        // Send request to get all data of  5 columns
+        complete("5 columns")
+      }~
+      path("10"){
+        // Send request to get all data of 10 columns
+        complete("10 columns")
+      }
+    }
   }
 }
