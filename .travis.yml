@@ -11,7 +11,14 @@ sudo:
   - required
 script:
   - cd $TEST_DIR && sbt assembly && sbt clean coverage test coverageReport
+cache:
+  directories:
+    - $HOME/.ivy2/cache
+    - $HOME/.sbt/boot/
+    - $HOME/.m2/repository
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - find $HOME/.sbt -name "*.lock" | xargs rm
+  - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
 services:
   - cassandra
