@@ -20,5 +20,5 @@ object RestAPI extends App{
     }
   Http().bindAndHandle(route,"localhost",8080)
 
-  println("server started at 8080")
+  println("Server started at 8080")
 }
