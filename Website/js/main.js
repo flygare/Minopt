@@ -1,20 +1,18 @@
-const BASEURL = "http://0.0.0.0:3000";
+const BASEURL = "https://jsonplaceholder.typicode.com";
 
 $(function(){
     $("#get-btn").click(function(){
         console.log("GET");
         $.ajax({
             type: "GET",
-            url: "http://mean-quote-machine.herokuapp.com/get_random_quote",
+            url: BASEURL + "/posts/1",
             contentType: "application/json; charset=utf-8",
-            dataType: "jsonp",
+            dataType: "json",
             success: function(data) {
                 var json = JSON.parse(JSON.stringify(data));
-                var author = json.quote.author;
-                var text = json.quote.text;
 
-                $("#quote-author").text(author);
-                $("#quote-text").text(text);
+                $("#get-title").text(json.title);
+                $("#get-body").text(json.body);
             },
             error: function(error) {
                 console.error(error);
@@ -24,26 +22,22 @@ $(function(){
 
     $("#post-btn").click(function(){
         console.log("POST");
-        var tmp = JSON.stringify({
-            "author": "Robin Flygare and Anthon Holmqvist",
-            "text": "Minopt"
+        var lorem = JSON.stringify({
+            "title": "Hello World",
+            "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         });
-
-        console.log(tmp);
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:1880/",
+            url: BASEURL + "/posts",
             contentType: "application/json; charset=utf-8",
-            dataType: "jsonp",
-            data: tmp,
+            dataType: "json",
+            data: lorem,
             success: function(data) {
                 var json = JSON.parse(JSON.stringify(data));
-                var author = json.quote.author;
-                var text = json.quote.text;
 
-                $("#quote-author").text(author);
-                $("#quote-text").text(text);
+                $("#post-title").text(json.title);
+                $("#post-body").text(json.body);
             },
             error: function(error) {
                 console.error(error);

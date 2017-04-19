@@ -1,10 +1,3 @@
-val SparkPackageRepo = "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
-
-val SparkCore = "org.apache.spark" %% "spark-core" % "2.1.0"
-val SparkSql = "org.apache.spark" %% "spark-sql" % "2.1.0"
-val SparkCassandraConnector = "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1"
-val ScalaTest = "org.scalatest" %% "scalatest" % "3.0.1" % "test"
-
 lazy val commonSettings = Seq(
   organization := "me.flygare",
   version := "1.0",
@@ -15,15 +8,15 @@ lazy val commonSettings = Seq(
 lazy val root = (project in file("."))
   .settings(
     commonSettings,
-    name := "StressTester",
+    name := "DatabaseLogic",
     libraryDependencies ++= Seq(
-      SparkCassandraConnector,
-      SparkCore,
-      SparkSql,
-      ScalaTest
+      "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1",
+      "org.apache.spark" %% "spark-core" % "2.1.0",
+      "org.apache.spark" %% "spark-sql" % "2.1.0",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
     ),
     resolvers ++= Seq(
-      SparkPackageRepo
+        "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
     ),
     mainClass in(Compile, run) := Some(s"$organization.$name"),
     assemblyMergeStrategy in assembly := {

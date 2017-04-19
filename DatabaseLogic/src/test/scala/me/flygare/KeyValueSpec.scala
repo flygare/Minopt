@@ -87,10 +87,7 @@ class KeyValueSpec extends FlatSpec with SparkConnection {
   "getKVTen" should "return the specified object with a key" in {
     val createObj = kVHandler.createKVTen("a", "b", "c", "d", "e", "f", "g", "h", "i", "j")
     val getObj = kVHandler.getKVTen(createObj.key)
-
-    println("CREATE: " + createObj.toString)
-    println("GET: " + getObj.toString)
-
+    
     assert(getObj.key == createObj.key)
     assert(getObj.col1 == createObj.col1)
     assert(getObj.col2 == createObj.col2)
