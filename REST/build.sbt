@@ -15,7 +15,7 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-http-testkit" % "10.0.3"
     ),
     resolvers += Resolver.sonatypeRepo("public"),
-    resolvers += "JBoss" at "https://repository.jboss.org/"
+    resolvers += "JBoss" at "https://repository.jboss.org/",
     mainClass in (Compile,run) := Some(s"$organization.$name"),
     mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "rest.jar"
