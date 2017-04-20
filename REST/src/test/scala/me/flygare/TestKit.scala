@@ -31,23 +31,23 @@ class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpCo
       }
     }
 
-    "return a success code for get request at api/kv/2" in {
+    "return a success code for get request at api/person" in {
       // tests:
-      Get("/api/kv/2") ~> MainRouter.routes ~> check {
+      Get("/api/person") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for get request at api/kv/5" in {
+    "return a success code for get request at api/address" in {
       // tests:
-      Get("/api/kv/5") ~> MainRouter.routes ~> check {
+      Get("/api/address") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for get request at api/kv/10" in {
+    "return a success code for get request at api/profile" in {
       // tests:
-      Get("/api/kv/10") ~> MainRouter.routes ~> check {
+      Get("/api/profile") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }

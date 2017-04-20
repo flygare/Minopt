@@ -9,26 +9,38 @@ import me.flygare.utils.HttpConnection
 object ApiRoute extends HttpConnection{
  val route =
   pathPrefix("api") {
-    pathPrefix("kv") {
-      path("2"){
-        get {
-          // Send request to get all data of 2 columns
-          complete("2 columns")
-        }~
+    path("person"){
+      get {
+        // Send request to get all data of persons
+        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/person")))
+      }~
+      post {
+        entity(as[String]){
+          data => complete(s"The data you sent were: $data")
+        }
+      }
+    }~
+    path("address"){
+      get {
+        // Send request to get all data of adresses
+        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/address")))
+      }~
         post {
           entity(as[String]){
             data => complete(s"The data you sent were: $data")
           }
         }
+    }~
+    path("profile"){
+      get {
+        // Send request to get all data of profiles
+        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profile")))
       }~
-      path("5"){
-        // Send request to get all data of  5 columns
-        complete("5 columns")
-      }~
-      path("10"){
-        // Send request to get all data of 10 columns
-        complete("10 columns")
-      }
+        post {
+          entity(as[String]){
+            data => complete(s"The data you sent were: $data")
+          }
+        }
     }
   }
 }
