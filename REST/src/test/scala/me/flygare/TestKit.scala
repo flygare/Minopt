@@ -10,10 +10,17 @@ class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpCo
 
   "The service" should {
 
-    "return a greeting for GET requests to the test path" in {
+    "return a greeting for GET requests to the test/ok path" in {
       // tests:
-      Get("/rammus") ~> MainRouter.routes ~> check {
+      Get("/test/ok") ~> MainRouter.routes ~> check {
         responseAs[String] shouldEqual "Ok"
+      }
+    }
+
+    "return a success code for GET requests to the test/json path" in {
+      // tests:
+      Get("/test/json") ~> MainRouter.routes ~> check {
+        status === StatusCodes.Success
       }
     }
 

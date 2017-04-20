@@ -1,13 +1,19 @@
 package me.flygare.routes
 
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.server.Directives.{complete, get, path}
 import akka.http.scaladsl.server.Directives._
+import me.flygare.utils.HttpConnection
 
-object TestRoute {
+object TestRoute extends HttpConnection{
   val route =
-    path("rammus") {
-      get {
+    pathPrefix("test") {
+      path("ok"){
         complete("Ok")
+      }~
+      path("json"){
+        complete(Http().singleRequest(HttpRequest(uri = s"http://jsonplaceholder.typicode.com/posts/1")))
       }
     }
 }

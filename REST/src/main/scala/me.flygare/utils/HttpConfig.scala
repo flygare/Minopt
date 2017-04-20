@@ -12,5 +12,5 @@ trait HttpConfig{
   val port = conf.getInt("http.local.port")
 
   val remoteHost = conf.getString("http.remote.interface")
-  val remotePost = conf.getInt("http.remote.port")
+  val remotePort = conf.getInt("http.remote.port")
 }
