@@ -4,6 +4,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.server.Directives._
 import me.flygare.utils.{HttpConfig, HttpConnection}
+import akka.http.scaladsl.model.HttpMethods._
 
 object ApiRoute extends HttpConnection with HttpConfig{
  val route =
@@ -17,7 +18,7 @@ object ApiRoute extends HttpConnection with HttpConfig{
       }~
       post {
         entity(as[String]){
-          data => complete(s"The data you sent were: $data")
+          data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/persons", entity = data)))
         }
       }
     }~
@@ -30,7 +31,7 @@ object ApiRoute extends HttpConnection with HttpConfig{
       }~
         post {
           entity(as[String]){
-            data => complete(s"The data you sent were: $data")
+            data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/addresses", entity = data)))
           }
         }
     }~
@@ -43,7 +44,7 @@ object ApiRoute extends HttpConnection with HttpConfig{
       }~
         post {
           entity(as[String]){
-            data => complete(s"The data you sent were: $data")
+            data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/profiles", entity = data)))
           }
         }
     }
