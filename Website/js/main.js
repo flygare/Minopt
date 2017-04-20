@@ -1,5 +1,4 @@
 const BASEURL = "https://jsonplaceholder.typicode.com";
-
 $(function(){
     $("#get-btn").click(function(){
         console.log("GET");
@@ -19,7 +18,15 @@ $(function(){
             }
         });
     });
-
+    
+    $('body').on('click','.option li',function(){
+        var i = $(this).parents('.select').attr('id');
+            var v = $(this).children().text();
+                var o = $(this).attr('id');
+                    $('#'+i+' .selected').attr('id',o);
+                        $('#'+i+' .selected').text(v);
+    });
+    
     $("#post-btn").click(function(){
         console.log("POST");
         var lorem = JSON.stringify({

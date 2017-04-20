@@ -35,6 +35,29 @@
 
     <div class="container">
         <div class="row">
+            <div class="col-md-6">
+		        <div class="input-group-btn select" id="selectrows">
+    		        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">1k rows</span> <span class="caret"></span></button>
+    		        <ul class="dropdown-menu option" role="menu">
+    			        <li id="1k"><a href="#">1k rows</a></li>
+    			        <li id="10k"><a href="#">10k rows</a></li>
+    			        <li id="100k"><a href="#">100k rows</a></li>
+    		        </ul>
+		        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group-btn select" id="selecttype">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Person (2 properties)</span> <span class="caret"></span></button>
+                    <ul class="dropdown-menu option" role="menu">
+                        <li id="person"><a href="#">Person (2 properties)</a></li>
+                        <li id="address"><a href="#">Address (5 properties)</a></li>
+                        <li id="profile"><a href="#">Profile (10 properties)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
             <div class="col-md-12">
                 <div class="col-md-6">
                     <button id="get-btn" type="button" class="btn btn-lg btn-primary center-block"> GET request </button>
