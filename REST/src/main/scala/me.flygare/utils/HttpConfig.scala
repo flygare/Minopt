@@ -8,7 +8,9 @@ trait HttpConfig{
   val parsedConfig = ConfigFactory.parseFile(new File("src/main/resources/application.conf"))
   val conf = ConfigFactory.load(parsedConfig)
 
-  val port = conf.getInt("http.local.port")
   val interface = conf.getString("http.local.interface")
+  val port = conf.getInt("http.local.port")
+
   val remoteHost = conf.getString("http.remote.interface")
+  val remotePost = conf.getInt("http.remote.port")
 }
