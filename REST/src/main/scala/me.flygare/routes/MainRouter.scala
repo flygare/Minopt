@@ -1,6 +1,5 @@
-package me.flygare
+package me.flygare.routes
 
-import me.flygare.routes.{ApiRoute, TestRoute}
 import akka.http.scaladsl.server.Directives._
 
 object MainRouter {

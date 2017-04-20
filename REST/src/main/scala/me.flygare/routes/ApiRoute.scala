@@ -9,6 +9,9 @@ import akka.http.scaladsl.model.HttpMethods._
 object ApiRoute extends HttpConnection with HttpConfig{
  val route =
   pathPrefix("api") {
+    delete {
+      complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort/dblogic")))
+    }
     path("persons"){
       get {
         parameters('rows) {

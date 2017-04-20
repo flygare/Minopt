@@ -6,6 +6,10 @@ import me.flygare.utils.HttpConnection
 object MainRouter extends HttpConnection{
   val routes =
     pathPrefix("dblogic") {
+      delete {
+        // TODO truncate cassandra
+        complete("Cassandra truncated")
+      }
       path("persons"){
         get {
           parameters('rows) {

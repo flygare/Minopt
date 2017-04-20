@@ -4,6 +4,7 @@ import org.scalatest.{Matchers, WordSpec}
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.server._
+import me.flygare.routes.MainRouter
 import me.flygare.utils.HttpConfig
 
 class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
