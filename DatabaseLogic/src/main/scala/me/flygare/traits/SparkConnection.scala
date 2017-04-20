@@ -26,12 +26,15 @@ trait SparkConnection {
   val Keyspace = "minopt"
 
   session.execute("CREATE KEYSPACE IF NOT EXISTS " + Keyspace + " WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 };")
-  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".key_value_two(key uuid PRIMARY KEY, " +
-    "col1 TEXT, col2 TEXT);")
-  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".key_value_five(key uuid PRIMARY KEY, " +
-    "col1 TEXT, col2 TEXT, col3 TEXT, col4 TEXT, col5 TEXT);")
-  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".key_value_ten(key uuid PRIMARY KEY, " +
-    "col1 TEXT, col2 TEXT, col3 TEXT, col4 TEXT, col5 TEXT, col6 TEXT, col7 TEXT, col8 TEXT, col9 TEXT, col10 TEXT);")
+
+  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".person(key uuid PRIMARY KEY, " +
+    "firstname TEXT, lastname TEXT);")
+
+  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".address(key uuid PRIMARY KEY, " +
+    "street TEXT, zipcode INT, city TEXT, county TEXT, country TEXT);")
+
+  session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".profile(key uuid PRIMARY KEY, " +
+    "firstname TEXT, lastname TEXT, phonenumber TEXT, email TEXT, username TEXT, password TEXT, description TEXT, website TEXT, lastip TEXT, lastlogin TEXT);")
 
   session.close()
 }
