@@ -24,13 +24,27 @@ class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpCo
       }
     }
 
+    "return a success code for get request at api/kv/2" in {
+      // tests:
+      Get("/api/kv/2") ~> MainRouter.routes ~> check {
+        status === StatusCodes.Success
+      }
+    }
+
     "return a success code for get request at api/kv/5" in {
       // tests:
       Get("/api/kv/5") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
-    
+
+    "return a success code for get request at api/kv/10" in {
+      // tests:
+      Get("/api/kv/10") ~> MainRouter.routes ~> check {
+        status === StatusCodes.Success
+      }
+    }
+
     "return a MethodNotAllowed error for PUT requests to the root path" in {
       // tests:
       Put() ~> Route.seal(MainRouter.routes) ~> check {
