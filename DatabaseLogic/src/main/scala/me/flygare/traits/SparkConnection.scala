@@ -4,6 +4,10 @@ import com.datastax.driver.core.Session
 import com.datastax.spark.connector.cql.CassandraConnector
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.cassandra._
+import com.datastax.spark.connector.cql.CassandraConnectorConf
+import com.datastax.spark.connector.rdd.ReadConf
+
 
 trait SparkConnection {
   val warehouseLocation = "file:${system:user.dir}/spark-warehouse"
@@ -13,6 +17,7 @@ trait SparkConnection {
     .set("spark.cassandra.connection.host", "127.0.0.1")
     .set("spark.cassandra.auth.username", "cassandra")
     .set("spark.cassandra.auth.password", "cassandra")
+    .set("spark.cassandra.connection.connections_per_executor_max", "4")
 
   val spark = SparkSession
     .builder()

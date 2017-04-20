@@ -1,8 +1,9 @@
 package me.flygare.handlers
 
-import me.flygare.models.{Address, Profile, Person}
+import me.flygare.models.{Address, Person, Profile}
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.cassandra._
+import org.joda.time.DateTime
 
 
 class ProfileHandler {
@@ -18,10 +19,10 @@ class ProfileHandler {
   /*
    * CREATE
    */
-  def createProfile(firstName: String, lastName: String, phonenumber: String, email: String, username: String, password: String, description: String, website: String, lastIp: String, lastLogin: String): Profile = {
+  def createProfile(firstname: String, lastname: String, phonenumber: String, email: String, username: String, password: String, description: String, website: String, lastip: String, lastlogin: String): Profile = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val profile = Profile(UUID, firstName, lastName, phonenumber, email, username, password, description, website, lastIp, lastLogin)
+    val profile = Profile(UUID, firstname, lastname, phonenumber, email, username, password, description, website, lastip, lastlogin)
 
     Seq(profile)
       .toDS()
@@ -47,8 +48,8 @@ class ProfileHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .map(row => Profile(
           row.getAs[String]("key"),
-          row.getAs[String]("first_name"), row.getAs[String]("last_name"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
-          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("last_ip"), row.getAs[String]("last_login")
+          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
+          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
         ))
         .collect()
 
@@ -64,8 +65,8 @@ class ProfileHandler {
         .load()
         .map(row => Profile(
           row.getAs[String]("key"),
-          row.getAs[String]("first_name"), row.getAs[String]("last_name"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
-          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("last_ip"), row.getAs[String]("last_login")
+          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
+          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
         ))
         .collect()
 
