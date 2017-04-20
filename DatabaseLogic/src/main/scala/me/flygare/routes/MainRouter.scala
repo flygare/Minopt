@@ -23,12 +23,15 @@ object MainRouter extends HttpConnection{
         get {
           parameters('rows) {
             (rows) =>
-              complete("cassandra happy")
+              complete(personHandler.getPersons.toString)
           }
         }~
           post {
             entity(as[Person]){
-              person => complete(s"The person you sent weres: $person")
+              person => {
+                personHandler.createPerson(person)
+                complete(s"The person you sent were: $person")
+              }
             }
           }
       }~

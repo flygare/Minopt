@@ -18,10 +18,15 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-http" % "10.0.5",
       "com.typesafe.akka" %% "akka-http-testkit" % "10.0.5",
       "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
-      "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5"
+      "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
+
+      // To use jackson 2.8.7 over 2.6.5, todo fix the duplicate in dependencies
+      "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.8.7",
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7"
     ),
     resolvers ++= Seq(
         "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
+
     ),
     mainClass in(Compile, run) := Some(s"$organization.$name"),
     assemblyMergeStrategy in assembly := {
