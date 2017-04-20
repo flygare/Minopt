@@ -3,16 +3,16 @@ package me.flygare.routes
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.server.Directives._
-import me.flygare.utils.HttpConnection
+import me.flygare.utils.{HttpConfig, HttpConnection}
 
-object ApiRoute extends HttpConnection{
+object ApiRoute extends HttpConnection with HttpConfig{
  val route =
   pathPrefix("api") {
     path("persons"){
       get {
-        parameters('properties) {
-          (properties) =>
-            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/persons/properties=$properties")))
+        parameters('rows) {
+          (rows) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/persons?rows=$rows")))
         }
       }~
       post {
@@ -23,9 +23,9 @@ object ApiRoute extends HttpConnection{
     }~
     path("addresses"){
       get {
-        parameters('properties) {
-          (properties) =>
-            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/addresses?properties=$properties")))
+        parameters('rows) {
+          (rows) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/addresses?rows=$rows")))
         }
       }~
         post {
@@ -36,9 +36,9 @@ object ApiRoute extends HttpConnection{
     }~
     path("profiles"){
       get {
-        parameters('properties) {
-          (properties) =>
-            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profiles?properties=$properties")))
+        parameters('rows) {
+          (rows) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profiles?rows=$rows")))
         }
       }~
         post {
