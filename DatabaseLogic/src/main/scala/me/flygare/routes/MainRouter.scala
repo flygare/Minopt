@@ -53,7 +53,7 @@ object MainRouter extends HttpConnection{
             }
           }~
             post {
-              entity(as[String]){
+              entity(as[Profile]){
                 profile => complete(s"The profile you sent were: $profile")
               }
             }
