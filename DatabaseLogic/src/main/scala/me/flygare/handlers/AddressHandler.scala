@@ -1,6 +1,6 @@
 package me.flygare.handlers
 
-import me.flygare.models.{Address, Person}
+import me.flygare.models.AddressDB
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
@@ -17,10 +17,10 @@ class AddressHandler {
   /*
    * CREATE
    */
-  def createAddress(street: String, zipcode: Int, city: String, county: String, country: String): Address = {
+  def createAddress(street: String, zipcode: Int, city: String, county: String, country: String): AddressDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val address = Address(UUID, street, zipcode, city, county, country)
+    val address = AddressDB(UUID, street, zipcode, city, county, country)
 
     Seq(address)
       .toDS()
@@ -36,7 +36,7 @@ class AddressHandler {
   /*
    * GET
    */
-  def getAddress(key: String): Address = {
+  def getAddress(key: String): AddressDB = {
     val address =
       spark
         .read
@@ -44,7 +44,7 @@ class AddressHandler {
         .cassandraFormat(TableName, Keyspace)
         .load()
         .filter(row => row.getAs[String]("key").equals(key))
-        .map(row => Address(
+        .map(row => AddressDB(
           row.getAs[String]("key"),
           row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
@@ -53,19 +53,26 @@ class AddressHandler {
     address(0)
   }
 
-  def getAddresses: Array[Address] = {
+  def getAddresses: Array[AddressDB] = {
     val addresses =
       spark
         .read
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
-        .map(row => Address(
+        .map(row => AddressDB(
           row.getAs[String]("key"),
           row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
         .collect()
 
     addresses
+  }
+
+  /*
+   * DELETE
+   */
+  def deleteAddresses: Unit = {
+    spark.sql(s"TRUNCATE $Keyspace.$TableName;")
   }
 }

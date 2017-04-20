@@ -1,6 +1,9 @@
 package me.flygare.models
 
-case class Person(key: String,
-                  firstname: String, lastname: String)
+abstract class Human {
+  def firstname: String
+  def lastname: String
+}
+case class Person(firstname: String, lastname: String) extends Human
 
-
+case class PersonDB(key: String, firstname: String, lastname: String) extends Human

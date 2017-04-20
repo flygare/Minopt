@@ -1,6 +1,6 @@
 package me.flygare.handlers
 
-import me.flygare.models.Person
+import me.flygare.models.{Person, PersonDB}
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
@@ -17,10 +17,25 @@ class PersonHandler {
   /*
   * CREATE
   */
-  def createPerson(firstname: String, lastname: String): Person = {
+  def createPerson(person: Person): PersonDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val person = Person(UUID, firstname, lastname)
+    val personDB = PersonDB(UUID, person.firstname, person.lastname)
+
+    Seq(personDB)
+    .toDS()
+    .write
+    .format(DatasetFormat)
+    .options(TableOption)
+    .mode("append")
+    .save()
+
+    personDB
+  }
+  def createPerson(firstname: String, lastname: String): PersonDB = {
+    val UUID = java.util.UUID.randomUUID.toString
+
+    val person = PersonDB(UUID, firstname, lastname)
 
     Seq(person)
       .toDS()
@@ -36,7 +51,7 @@ class PersonHandler {
   /*
    * GET
    */
-  def getPerson(key: String): Person = {
+  def getPerson(key: String): PersonDB = {
     val person =
       spark
         .read
@@ -44,22 +59,29 @@ class PersonHandler {
         .cassandraFormat(TableName, Keyspace)
         .load()
         .filter(row => row.getAs[String]("key").equals(key))
-        .map(row => Person(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
         .collect()
 
     person(0)
   }
 
-  def getPersons: Array[Person] = {
+  def getPersons: Array[PersonDB] = {
     val persons =
       spark
         .read
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
-        .map(row => Person(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
         .collect()
 
     persons
+  }
+
+  /*
+  * DELETE
+  */
+  def deletePersons: Unit = {
+    spark.sql(s"TRUNCATE $Keyspace.$TableName;")
   }
 }

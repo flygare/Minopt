@@ -2,12 +2,21 @@ package me.flygare.routes
 
 import akka.http.scaladsl.server.Directives._
 import me.flygare.utils.HttpConnection
+import me.flygare.handlers._
+import me.flygare.models._
+import me.flygare.utils.JsonSupport._
 
 object MainRouter extends HttpConnection{
+  val addressHandler = new AddressHandler
+  val personHandler = new PersonHandler
+  val profileHandler = new ProfileHandler
+
   val routes =
     pathPrefix("dblogic") {
       delete {
-        // TODO truncate cassandra
+        profileHandler.deleteProfiles
+        personHandler.deletePersons
+        profileHandler.deleteProfiles
         complete("Cassandra truncated")
       }
       path("persons"){
@@ -18,8 +27,8 @@ object MainRouter extends HttpConnection{
           }
         }~
           post {
-            entity(as[String]){
-              data => complete(s"The data you sent were: $data")
+            entity(as[Person]){
+              person => complete(s"The person you sent weres: $person")
             }
           }
       }~
@@ -31,8 +40,8 @@ object MainRouter extends HttpConnection{
             }
           }~
             post {
-              entity(as[String]){
-                data => complete(s"The data you sent were: $data")
+              entity(as[Address]){
+                address => complete(s"The address you sent were: $address")
               }
             }
         }~
@@ -45,7 +54,7 @@ object MainRouter extends HttpConnection{
           }~
             post {
               entity(as[String]){
-                data => complete(s"The data you sent were: $data")
+                profile => complete(s"The profile you sent were: $profile")
               }
             }
         }
