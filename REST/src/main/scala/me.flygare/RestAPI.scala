@@ -1,6 +1,7 @@
 package me.flygare
 
 import akka.http.scaladsl.Http
+import me.flygare.routes.MainRouter
 import me.flygare.utils.{HttpConfig, HttpConnection}
 
 object RestAPI extends App with HttpConnection with HttpConfig{

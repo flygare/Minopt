@@ -1,7 +1,6 @@
 package me.flygare.utils
 
 import java.io.File
-
 import com.typesafe.config.ConfigFactory
 
 trait HttpConfig{
