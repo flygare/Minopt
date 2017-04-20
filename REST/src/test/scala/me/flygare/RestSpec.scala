@@ -10,20 +10,20 @@ class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpC
 
   "The ApiRoute should" should {
 
-    "return a success code for GET request at api/person path" in {
-      Get("/api/person") ~> MainRouter.routes ~> check {
+    "return a success code for GET request at api/persons path with query" in {
+      Get("/api/persons?properties=2") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for GET request at api/address path" in {
-      Get("/api/address") ~> MainRouter.routes ~> check {
+    "return a success code for GET request at api/addresses path with query" in {
+      Get("/api/addresses?properties=5") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for GET request at api/profile path" in {
-      Get("/api/profile") ~> MainRouter.routes ~> check {
+    "return a success code for GET request at api/profiles path with query" in {
+      Get("/api/profiles?properties=10") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
@@ -34,22 +34,22 @@ class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpC
       }
     }
 
-    "return a success code for POST requests to the api/person path" in {
-      Post("/api/person", "string") ~> MainRouter.routes ~> check {
+    "return a success code for POST requests to the api/persons path with query" in {
+      Post("/api/persons?properties=10", "string") ~> MainRouter.routes ~> check {
         //TODO add check for data json format
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for POST requests to the api/address path" in {
-      Post("/api/address", "string") ~> MainRouter.routes ~> check {
+    "return a success code for POST requests to the api/addresses path with query" in {
+      Post("/api/addresses?properties=10", "string") ~> MainRouter.routes ~> check {
         //TODO add check for data json format
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for POST requests to the api/profile path" in {
-      Post("/api/profile", "string") ~> MainRouter.routes ~> check {
+    "return a success code for POST requests to the api/profiles path with query" in {
+      Post("/api/profiles?properties=2", "string") ~> MainRouter.routes ~> check {
         //TODO add check for data json format
         status === StatusCodes.Success
       }
