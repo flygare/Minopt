@@ -9,21 +9,25 @@ import me.flygare.utils.HttpConnection
 object ApiRoute extends HttpConnection{
  val route =
   pathPrefix("api") {
-    path("person"){
+    path("persons"){
       get {
-        // Send request to get all data of persons
-        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/person")))
+        parameters('properties) {
+          (properties) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/persons/properties=$properties")))
+        }
       }~
       post {
         entity(as[String]){
-          data => complete(s"The data you sent were:$ data")
+          data => complete(s"The data you sent were: $data")
         }
       }
     }~
-    path("address"){
+    path("addresses"){
       get {
-        // Send request to get all data of adresses
-        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/address")))
+        parameters('properties) {
+          (properties) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/addresses?properties=$properties")))
+        }
       }~
         post {
           entity(as[String]){
@@ -31,10 +35,12 @@ object ApiRoute extends HttpConnection{
           }
         }
     }~
-    path("profile"){
+    path("profiles"){
       get {
-        // Send request to get all data of profiles
-        complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profile")))
+        parameters('properties) {
+          (properties) =>
+            complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profiles?properties=$properties")))
+        }
       }~
         post {
           entity(as[String]){
