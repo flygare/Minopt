@@ -16,7 +16,7 @@ object ApiRoute extends HttpConnection{
       }~
       post {
         entity(as[String]){
-          data => complete(s"The data you sent were: $data")
+          data => complete(s"The data you sent were:$data")
         }
       }
     }~

@@ -6,31 +6,52 @@ import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.http.scaladsl.server._
 import me.flygare.utils.HttpConfig
 
-class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
+class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
 
   "The ApiRoute should" should {
 
-    "return a success code for get request at api/person" in {
+    "return a success code for GET request at api/person path" in {
       Get("/api/person") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for get request at api/address" in {
+    "return a success code for GET request at api/address path" in {
       Get("/api/address") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a success code for get request at api/profile" in {
+    "return a success code for GET request at api/profile path" in {
       Get("/api/profile") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
-    "return a greeting for GET requests to the test/ok path" in {
+    "return a greeting for GET request at test/ok path" in {
       Get("/test/ok") ~> MainRouter.routes ~> check {
         responseAs[String] shouldEqual "Ok"
+      }
+    }
+
+    "return a success code for POST requests to the api/person path" in {
+      Post("/api/person", "string") ~> MainRouter.routes ~> check {
+        //TODO add check for data json format
+        status === StatusCodes.Success
+      }
+    }
+
+    "return a success code for POST requests to the api/address path" in {
+      Post("/api/address", "string") ~> MainRouter.routes ~> check {
+        //TODO add check for data json format
+        status === StatusCodes.Success
+      }
+    }
+
+    "return a success code for POST requests to the api/profile path" in {
+      Post("/api/profile", "string") ~> MainRouter.routes ~> check {
+        //TODO add check for data json format
+        status === StatusCodes.Success
       }
     }
   }
