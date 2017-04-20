@@ -31,12 +31,6 @@ class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpC
       }
     }
 
-    "return a greeting for GET request at test/ok path" in {
-      Get("/test/ok") ~> MainRouter.routes ~> check {
-        responseAs[String] shouldEqual "Ok"
-      }
-    }
-
     "return a success code for POST requests to the dblogic/persons path with query" in {
       Post("/dblogic/persons?rows=10", "string") ~> MainRouter.routes ~> check {
         //TODO add check for data json format
@@ -54,15 +48,6 @@ class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpC
     "return a success code for POST requests to the dblogic/profiles path with query" in {
       Post("/dblogic/profiles?rows=2", "string") ~> MainRouter.routes ~> check {
         //TODO add check for data json format
-        status === StatusCodes.Success
-      }
-    }
-  }
-
-  "The test route should" should{
-
-    "return a success code for GET requests to the test/json path" in {
-      Get("/test/json") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
