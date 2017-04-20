@@ -8,52 +8,51 @@ import me.flygare.utils.HttpConfig
 
 class TestKit extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
 
-  "The service" should {
-
-    "return a greeting for GET requests to the test/ok path" in {
-      // tests:
-      Get("/test/ok") ~> MainRouter.routes ~> check {
-        responseAs[String] shouldEqual "Ok"
-      }
-    }
-
-    "return a success code for GET requests to the test/json path" in {
-      // tests:
-      Get("/test/json") ~> MainRouter.routes ~> check {
-        status === StatusCodes.Success
-      }
-    }
-
-    "leave GET requests to other paths unhandled" in {
-      // tests:
-      Get("/errorpath") ~> MainRouter.routes ~> check {
-        handled shouldBe false
-      }
-    }
+  "The ApiRoute should" should {
 
     "return a success code for get request at api/person" in {
-      // tests:
       Get("/api/person") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
     "return a success code for get request at api/address" in {
-      // tests:
       Get("/api/address") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
     "return a success code for get request at api/profile" in {
-      // tests:
       Get("/api/profile") ~> MainRouter.routes ~> check {
         status === StatusCodes.Success
       }
     }
 
+    "return a greeting for GET requests to the test/ok path" in {
+      Get("/test/ok") ~> MainRouter.routes ~> check {
+        responseAs[String] shouldEqual "Ok"
+      }
+    }
+  }
+
+  "The test route should" should{
+
+    "return a success code for GET requests to the test/json path" in {
+      Get("/test/json") ~> MainRouter.routes ~> check {
+        status === StatusCodes.Success
+      }
+    }
+  }
+
+  "The api" should {
+
+    "leave GET requests to other paths unhandled" in {
+      Get("/errorpath") ~> MainRouter.routes ~> check {
+        handled shouldBe false
+      }
+    }
+
     "return a MethodNotAllowed error for PUT requests to the root path" in {
-      // tests:
       Put() ~> Route.seal(MainRouter.routes) ~> check {
         status === StatusCodes.MethodNotAllowed
       }
