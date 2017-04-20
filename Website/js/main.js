@@ -1,50 +1,121 @@
-const BASEURL = "https://jsonplaceholder.typicode.com";
+const BASEURL = "http://127.0.0.1/api/";
+
+function checkObjectRadios() {
+    var r = document.getElementsByName("object");
+    var object = "";
+
+    for(var i=0; i < r.length; i++){
+        if(r[i].checked) {
+            object = r[i].id;
+        }
+    }
+    return object.split("-")[0];
+}
+
+function checkRowRadios() {
+    var r = document.getElementsByName("rows");
+    var rows = "";
+
+    for(var i=0; i < r.length; i++){
+        if(r[i].checked) {
+            rows = r[i].id;
+        }
+    }
+    return rows.split("-")[0];
+}
+
 $(function(){
-    $("#get-btn").click(function(){
-        console.log("GET");
+    $("#GET-btn").click(function(){
+        console.log(BASEURL + objectType + "/?rows=" + nrOfRows);
+
+        var objectType = checkObjectRadios();
+        var nrOfRows = checkRowRadios();
+
         $.ajax({
             type: "GET",
-            url: BASEURL + "/posts/1",
+            url: BASEURL + objectType + "/?rows=" + nrOfRows,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function(data) {
-                var json = JSON.parse(JSON.stringify(data));
-
-                $("#get-title").text(json.title);
-                $("#get-body").text(json.body);
+                $("#response").text(JSON.stringify(data));
             },
             error: function(error) {
                 console.error(error);
             }
         });
     });
-    
-    $('body').on('click','.option li',function(){
-        var i = $(this).parents('.select').attr('id');
-            var v = $(this).children().text();
-                var o = $(this).attr('id');
-                    $('#'+i+' .selected').attr('id',o);
-                        $('#'+i+' .selected').text(v);
-    });
-    
-    $("#post-btn").click(function(){
-        console.log("POST");
-        var lorem = JSON.stringify({
-            "title": "Hello World",
-            "body": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        });
 
+    $("#POST-btn").click(function(){
+        console.log(BASEURL + objectType + "/");
+
+        var objectType = checkObjectRadios();
+        var nrOfRows = checkRowRadios();
+        var data = "{}"
+
+        if (objectType == "persons") {
+            data = JSON.stringify({
+                "firstname": faker.name.firstName(),
+                "lastname": faker.name.lastName()
+            });
+        }
+
+        if (objectType == "addresses") {
+            data = JSON.stringify({
+                "street": faker.address.streetName(),
+                "zipcode": faker.address.zipCode(),
+                "city": faker.address.city(),
+                "county": faker.address.county(),
+                "country": faker.address.country()
+            });
+        }
+
+        if (objectType == "profiles") {
+            data = JSON.stringify({
+                "firstname": faker.name.firstName(),
+                "lastname": faker.name.lastName(),
+                "phonenumber": faker.phone.phoneNumber(),
+                "email": faker.internet.email(),
+                "username": faker.internet.userName(),
+                "password": faker.internet.password(20),
+                "description": faker.lorem.sentence(),
+                "website": faker.internet.url(),
+                "lastip": faker.internet.ip(),
+                "lastlogin": faker.date.recent()
+
+            });
+        }
+
+        console.log(data);
         $.ajax({
             type: "POST",
-            url: BASEURL + "/posts",
+            url: BASEURL + objectType + "/",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            data: lorem,
+            data: data,
             success: function(data) {
-                var json = JSON.parse(JSON.stringify(data));
+                $("#response").text(JSON.stringify(data));
+            },
+            error: function(error) {
+                console.error(error);
+            }
+        });
 
-                $("#post-title").text(json.title);
-                $("#post-body").text(json.body);
+        $("#response").text(JSON.stringify(JSON.parse(data),null,2));
+    });
+
+    $("#DELETE-btn").click(function(){
+        var objectType = checkObjectRadios();
+        var nrOfRows = checkRowRadios();
+
+        console.log(BASEURL + objectType + "/");
+
+        $.ajax({
+            type: "DELETE",
+            url: BASEURL + objectType + "/",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                $("#response").text(JSON.stringify(data));
             },
             error: function(error) {
                 console.error(error);
