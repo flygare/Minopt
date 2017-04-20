@@ -12,10 +12,10 @@ class PersonSpec extends FunSpec with SparkConnection {
    * CREATE
    */
   describe("createPerson()") {
-    it ("should return the created person") {
+    it("should return the created person") {
       val person = personHandler.createPerson("Lars", "Larsson")
 
-      assert (person.key != null)
+      assert(person.key != null)
       assert(person.firstname == "Lars")
       assert(person.lastname == "Larsson")
     }
@@ -25,18 +25,16 @@ class PersonSpec extends FunSpec with SparkConnection {
    * GET
    */
   describe("getPerson()") {
-    it ("should return the specified person with a key") {
+    it("should return the specified person with a key") {
       val createdPerson = personHandler.createPerson("Lars", "Larsson")
       val fetchedPerson = personHandler.getPerson(createdPerson.key)
 
-      assert(fetchedPerson.key == createdPerson.key)
-      assert(fetchedPerson.firstname == createdPerson.firstname)
-      assert(fetchedPerson.lastname == createdPerson.lastname)
+      assert(fetchedPerson == createdPerson)
     }
   }
 
   describe("getPersons()") {
-    it ("should return an array with Person objects") {
+    it("should return an array with persons") {
       val person = personHandler.createPerson("Lars", "Larsson")
       val persons = personHandler.getPersons
 

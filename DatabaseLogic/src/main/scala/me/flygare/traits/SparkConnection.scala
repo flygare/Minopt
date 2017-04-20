@@ -31,10 +31,10 @@ trait SparkConnection {
     "firstname TEXT, lastname TEXT);")
 
   session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".address(key uuid PRIMARY KEY, " +
-    "street TEXT, zip_code INT, city TEXT, county TEXT, country TEXT);")
+    "street TEXT, zipcode INT, city TEXT, county TEXT, country TEXT);")
 
   session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".profile(key uuid PRIMARY KEY, " +
-    "first_name TEXT, last_name TEXT, phonenumber TEXT, email TEXT, username TEXT, password TEXT, description TEXT, website TEXT, last_ip TEXT, last_login TEXT);")
+    "firstname TEXT, lastname TEXT, phonenumber TEXT, email TEXT, username TEXT, password TEXT, description TEXT, website TEXT, lastip TEXT, lastlogin TEXT);")
 
   session.close()
 }

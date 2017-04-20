@@ -17,10 +17,10 @@ class AddressHandler {
   /*
    * CREATE
    */
-  def createAddress(street: String, zipCode: Int, city: String, county: String, country: String): Address = {
+  def createAddress(street: String, zipcode: Int, city: String, county: String, country: String): Address = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val address = Address(UUID, street, zipCode, city, county, country)
+    val address = Address(UUID, street, zipcode, city, county, country)
 
     Seq(address)
       .toDS()
@@ -46,7 +46,7 @@ class AddressHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .map(row => Address(
           row.getAs[String]("key"),
-          row.getAs[String]("street"), row.getAs[Int]("zip_code"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
+          row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
         .collect()
 
@@ -62,7 +62,7 @@ class AddressHandler {
         .load()
         .map(row => Address(
           row.getAs[String]("key"),
-          row.getAs[String]("street"), row.getAs[Int]("zip_code"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
+          row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
         .collect()
 
