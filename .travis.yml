@@ -20,5 +20,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash)
   - find $HOME/.sbt -name "*.lock" | xargs rm
   - find $HOME/.ivy2 -name "ivydata-*.properties" | xargs rm
-services:
-  - cassandra
+before_install:
+  - sudo rm -rf /var/lib/cassandra/*
+  - wget http://www.us.apache.org/dist/cassandra/3.0.12/apache-cassandra-3.0.12-bin.tar.gz && tar -xvzf apache-cassandra-3.0.12-bin.tar.gz && sudo sh apache-cassandra-3.0.12/bin/cassandra
+  - sudo service cassandra start
