@@ -1,6 +1,5 @@
 package me.flygare.routes
 
-import akka.http.scaladsl.server.Directives.{complete, get, path}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.HttpRequest
 import akka.http.scaladsl.server.Directives._
