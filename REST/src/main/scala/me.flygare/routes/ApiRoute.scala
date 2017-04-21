@@ -12,18 +12,18 @@ object ApiRoute extends HttpConnection with HttpConfig {
     pathPrefix("api") {
       respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
         delete {
-          complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort/dblogic")))
+          complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort$remotePath")))
         }
         path("persons") {
           get {
             parameters('rows) {
               (rows) =>
-                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/persons?rows=$rows")))
+                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/persons?rows=$rows")))
             }
           } ~
             post {
               entity(as[String]) {
-                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
             }
         } ~
@@ -31,12 +31,12 @@ object ApiRoute extends HttpConnection with HttpConfig {
             get {
               parameters('rows) {
                 (rows) =>
-                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/addresses?rows=$rows")))
+                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/addresses?rows=$rows")))
               }
             } ~
               post {
                 entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
                 }
               }
           } ~
@@ -44,12 +44,12 @@ object ApiRoute extends HttpConnection with HttpConfig {
             get {
               parameters('rows) {
                 (rows) =>
-                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort/dblogic/profiles?rows=$rows")))
+                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/profiles?rows=$rows")))
               }
             } ~
               post {
                 entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
                 }
               }
           }
