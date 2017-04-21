@@ -5,6 +5,7 @@ import me.flygare.utils.HttpConnection
 import me.flygare.handlers._
 import me.flygare.models._
 import me.flygare.utils.JsonSupport._
+import scala.concurrent.ExecutionContext
 
 import scala.concurrent.Future
 
@@ -25,7 +26,7 @@ object MainRouter extends HttpConnection{
         get {
           parameters('rows) {
             (rows) =>
-              complete("cassandra happy")
+              complete(personHandler.getPersons(rows.toInt))
           }
         }~
           post {
@@ -41,7 +42,7 @@ object MainRouter extends HttpConnection{
           get {
             parameters('rows) {
               (rows) =>
-                complete("cassandra happy")
+                complete(addressHandler.getAddresses(rows.toInt))
             }
           }~
             post {
@@ -54,7 +55,7 @@ object MainRouter extends HttpConnection{
           get {
             parameters('rows) {
               (rows) =>
-                complete("cassandra happy")
+                complete(profileHandler.getProfiles(0))
             }
           }~
             post {
@@ -64,8 +65,4 @@ object MainRouter extends HttpConnection{
             }
         }
     }
-
-  private def getActivePersons: Future[List[PersonDB]] =
-    Future(personHandler.getPersons.map(PersonDB(_)))
-
 }

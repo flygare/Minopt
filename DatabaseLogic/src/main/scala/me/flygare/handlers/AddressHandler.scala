@@ -53,7 +53,24 @@ class AddressHandler {
     address(0)
   }
 
-  def getAddresses: Array[AddressDB] = {
+  def getAddresses(nrOfRows: Int): Array[AddressDB] = {
+    //TODO
+    val addresses =
+      spark
+        .read
+        .options(TableOption)
+        .cassandraFormat(TableName, Keyspace)
+        .load()
+        .map(row => AddressDB(
+          row.getAs[String]("key"),
+          row.getAs[String]("street"), row.getAs[String]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
+        ))
+        .collect()
+
+    addresses
+  }
+
+  def getAllAddresses: Array[AddressDB] = {
     val addresses =
       spark
         .read
@@ -72,7 +89,7 @@ class AddressHandler {
   /*
    * DELETE
    */
-  def deleteAddresses: Unit = {
+  def deleteAddresses(): Unit = {
     spark.sql(s"TRUNCATE $Keyspace.$TableName;")
   }
 }

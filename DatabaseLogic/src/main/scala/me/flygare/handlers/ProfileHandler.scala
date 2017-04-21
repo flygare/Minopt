@@ -54,7 +54,25 @@ class ProfileHandler {
     profile(0)
   }
 
-  def getProfiles: Array[ProfileDB] = {
+  def getProfiles(rows: Int): Array[ProfileDB] = {
+    //TODO
+    val profiles =
+      spark
+        .read
+        .options(TableOption)
+        .cassandraFormat(TableName, Keyspace)
+        .load()
+        .map(row => ProfileDB(
+          row.getAs[String]("key"),
+          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
+          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
+        ))
+        .collect()
+
+    profiles
+  }
+
+  def getAllProfiles: Array[ProfileDB] = {
     val profiles =
       spark
         .read
@@ -74,7 +92,7 @@ class ProfileHandler {
   /*
   * DELETE
   */
-  def deleteProfiles: Unit = {
+  def deleteProfiles(): Unit = {
     spark.sql(s"TRUNCATE $Keyspace.$TableName;")
   }
 }

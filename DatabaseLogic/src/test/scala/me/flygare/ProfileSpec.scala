@@ -56,7 +56,7 @@ class ProfileSpec extends FunSpec with SparkConnection {
       val currentDate = dateFormat.format(Calendar.getInstance().getTime)
 
       val profle = profileHandler.createProfile("Lars", "Larsson", "0603225533", "larslarsson@gmail.com", "larstheboss", "LampaGolvMatta45", "I'm Lars Larsson.", "http://larslarsson.com", "127.0.0.1", currentDate)
-      val profiles = profileHandler.getProfiles
+      val profiles = profileHandler.getAllProfiles
 
       assert(profiles.getClass == new Array[ProfileDB](0).getClass)
     }

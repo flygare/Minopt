@@ -39,7 +39,7 @@ class AddressSpec extends FunSpec with SparkConnection {
   describe("getAddresses()") {
     it("should return an array with addresses with DB format") {
       val address = addressHandler.createAddress("Bourbon Street 1", "13423", "Pretend Town", "Blekinge", "Sweden")
-      val addresses = addressHandler.getAddresses
+      val addresses = addressHandler.getAllAddresses
 
       assert(addresses.getClass == new Array[AddressDB](0).getClass)
     }

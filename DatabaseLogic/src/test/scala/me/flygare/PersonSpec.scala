@@ -36,7 +36,7 @@ class PersonSpec extends FunSpec with SparkConnection {
   describe("getPersons()") {
     it("should return an array with persons of type PersonDB") {
       val person = personHandler.createPerson("Lars", "Larsson")
-      val persons = personHandler.getPersons
+      val persons = personHandler.getAllPersons
 
       assert(persons.getClass == new Array[PersonDB](0).getClass)
     }

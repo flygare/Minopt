@@ -65,7 +65,21 @@ class PersonHandler {
     person(0)
   }
 
-  def getPersons: Array[PersonDB] = {
+  def getPersons(rows: Int): Array[PersonDB] = {
+    //TODO
+    val persons =
+      spark
+        .read
+        .options(TableOption)
+        .cassandraFormat(TableName, Keyspace)
+        .load()
+        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .collect()
+
+    persons
+  }
+
+  def getAllPersons: Array[PersonDB] = {
     val persons =
       spark
         .read
@@ -81,7 +95,7 @@ class PersonHandler {
   /*
   * DELETE
   */
-  def deletePersons: Unit = {
+  def deletePersons(): Unit = {
     spark.sql(s"TRUNCATE $Keyspace.$TableName;")
   }
 }
