@@ -10,7 +10,7 @@ import akka.http.scaladsl.model.headers.RawHeader
 object ApiRoute extends HttpConnection with HttpConfig {
   val route =
     pathPrefix("api") {
-      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE")) {
+      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
         delete {
           complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort/dblogic")))
         }
