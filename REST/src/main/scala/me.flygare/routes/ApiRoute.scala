@@ -10,49 +10,47 @@ import akka.http.scaladsl.model.headers.RawHeader
 object ApiRoute extends HttpConnection with HttpConfig {
   val route =
     pathPrefix("api") {
-      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
-        delete {
-          complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort$remotePath")))
-        }
-        path("persons") {
+      delete {
+        complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort$remotePath")))
+      }
+      path("persons") {
+        get {
+          parameters('rows) {
+            (rows) =>
+              complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/persons?rows=$rows")))
+          }
+        } ~
+          post {
+            entity(as[String]) {
+              data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
+            }
+          }
+      } ~
+        path("addresses") {
           get {
             parameters('rows) {
               (rows) =>
-                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/persons?rows=$rows")))
+                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/addresses?rows=$rows")))
             }
           } ~
             post {
               entity(as[String]) {
-                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
             }
         } ~
-          path("addresses") {
-            get {
-              parameters('rows) {
-                (rows) =>
-                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/addresses?rows=$rows")))
-              }
-            } ~
-              post {
-                entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
-                }
-              }
+        path("profiles") {
+          get {
+            parameters('rows) {
+              (rows) =>
+                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/profiles?rows=$rows")))
+            }
           } ~
-          path("profiles") {
-            get {
-              parameters('rows) {
-                (rows) =>
-                  complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/profiles?rows=$rows")))
+            post {
+              entity(as[String]) {
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
-            } ~
-              post {
-                entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
-                }
-              }
-          }
-      }
+            }
+        }
     }
 }

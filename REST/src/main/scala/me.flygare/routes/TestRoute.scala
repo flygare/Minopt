@@ -10,13 +10,11 @@ import me.flygare.utils.HttpConnection
 object TestRoute extends HttpConnection {
   val route =
     pathPrefix("test") {
-      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
-        path("ok") {
-          complete("Ok")
-        } ~
-          path("json") {
-            complete(Http().singleRequest(HttpRequest(uri = s"http://jsonplaceholder.typicode.com/posts/1")))
-          }
-      }
+      path("ok") {
+        complete("Ok")
+      } ~
+        path("json") {
+          complete(Http().singleRequest(HttpRequest(uri = s"http://jsonplaceholder.typicode.com/posts/1")))
+        }
     }
 }
