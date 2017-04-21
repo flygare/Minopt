@@ -37,21 +37,18 @@ class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpC
 
     "return a success code for POST requests to the api/persons path with query" in {
       Post("/api/persons?rows=10", "string") ~> MainRouter.routes ~> check {
-        //TODO add check for data json format
         status === StatusCodes.Success
       }
     }
 
     "return a success code for POST requests to the api/addresses path with query" in {
       Post("/api/addresses?rows=10", "string") ~> MainRouter.routes ~> check {
-        //TODO add check for data json format
         status === StatusCodes.Success
       }
     }
 
     "return a success code for POST requests to the api/profiles path with query" in {
       Post("/api/profiles?rows=2", "string") ~> MainRouter.routes ~> check {
-        //TODO add check for data json format
         status === StatusCodes.Success
       }
     }
