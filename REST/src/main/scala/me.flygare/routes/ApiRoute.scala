@@ -5,7 +5,6 @@ import akka.http.scaladsl.model.{HttpEntity, HttpRequest, MediaTypes}
 import akka.http.scaladsl.server.Directives._
 import me.flygare.utils.{HttpConfig, HttpConnection}
 import akka.http.scaladsl.model.HttpMethods._
-import akka.http.scaladsl.model.headers.RawHeader
 
 object ApiRoute extends HttpConnection with HttpConfig {
   val route =
