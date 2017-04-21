@@ -66,13 +66,13 @@ class PersonHandler {
   }
 
   def getPersons(rows: Int): Array[PersonDB] = {
-    //TODO
     val persons =
       spark
         .read
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
+        .limit(rows)
         .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
         .collect()
 

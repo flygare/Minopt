@@ -55,13 +55,13 @@ class ProfileHandler {
   }
 
   def getProfiles(rows: Int): Array[ProfileDB] = {
-    //TODO
     val profiles =
       spark
         .read
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
+        .limit(rows)
         .map(row => ProfileDB(
           row.getAs[String]("key"),
           row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),

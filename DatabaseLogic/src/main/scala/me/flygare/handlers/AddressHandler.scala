@@ -53,14 +53,14 @@ class AddressHandler {
     address(0)
   }
 
-  def getAddresses(nrOfRows: Int): Array[AddressDB] = {
-    //TODO
+  def getAddresses(rows: Int): Array[AddressDB] = {
     val addresses =
       spark
         .read
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
+        .limit(rows)
         .map(row => AddressDB(
           row.getAs[String]("key"),
           row.getAs[String]("street"), row.getAs[String]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
