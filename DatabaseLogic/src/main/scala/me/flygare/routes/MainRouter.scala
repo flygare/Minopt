@@ -6,6 +6,8 @@ import me.flygare.handlers._
 import me.flygare.models._
 import me.flygare.utils.JsonSupport._
 
+import scala.concurrent.Future
+
 object MainRouter extends HttpConnection{
   val addressHandler = new AddressHandler
   val personHandler = new PersonHandler
@@ -23,7 +25,7 @@ object MainRouter extends HttpConnection{
         get {
           parameters('rows) {
             (rows) =>
-              complete(personHandler.getPersons.toString)
+              complete("cassandra happy")
           }
         }~
           post {
@@ -62,4 +64,8 @@ object MainRouter extends HttpConnection{
             }
         }
     }
+
+  private def getActivePersons: Future[List[PersonDB]] =
+    Future(personHandler.getPersons.map(PersonDB(_)))
+
 }
