@@ -10,7 +10,7 @@ import me.flygare.utils.HttpConnection
 object TestRoute extends HttpConnection {
   val route =
     pathPrefix("test") {
-      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE")) {
+      respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
         path("ok") {
           complete("Ok")
         } ~
