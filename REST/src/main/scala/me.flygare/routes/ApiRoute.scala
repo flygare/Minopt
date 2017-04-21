@@ -1,7 +1,7 @@
 package me.flygare.routes
 
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpRequest
+import akka.http.scaladsl.model.{HttpEntity, HttpRequest, MediaTypes}
 import akka.http.scaladsl.server.Directives._
 import me.flygare.utils.{HttpConfig, HttpConnection}
 import akka.http.scaladsl.model.HttpMethods._
@@ -23,7 +23,7 @@ object ApiRoute extends HttpConnection with HttpConfig {
           } ~
             post {
               entity(as[String]) {
-                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/persons", entity = data)))
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
             }
         } ~
@@ -36,7 +36,7 @@ object ApiRoute extends HttpConnection with HttpConfig {
             } ~
               post {
                 entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/addresses", entity = data)))
+                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
                 }
               }
           } ~
@@ -49,7 +49,7 @@ object ApiRoute extends HttpConnection with HttpConfig {
             } ~
               post {
                 entity(as[String]) {
-                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/profiles", entity = data)))
+                  data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort/dblogic/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
                 }
               }
           }

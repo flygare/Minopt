@@ -2,7 +2,6 @@ package me.flygare.routes
 
 import akka.http.scaladsl.model.headers.RawHeader
 import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server.Route
 import me.flygare.utils.HttpConnection
 import me.flygare.handlers._
 import me.flygare.models._
