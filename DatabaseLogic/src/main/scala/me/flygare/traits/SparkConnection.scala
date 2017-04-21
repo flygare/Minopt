@@ -36,7 +36,7 @@ trait SparkConnection {
     "firstname TEXT, lastname TEXT);")
 
   session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".address(key uuid PRIMARY KEY, " +
-    "street TEXT, zipcode INT, city TEXT, county TEXT, country TEXT);")
+    "street TEXT, zipcode TEXT, city TEXT, county TEXT, country TEXT);")
 
   session.execute("CREATE TABLE IF NOT EXISTS " + Keyspace + ".profile(key uuid PRIMARY KEY, " +
     "firstname TEXT, lastname TEXT, phonenumber TEXT, email TEXT, username TEXT, password TEXT, description TEXT, website TEXT, lastip TEXT, lastlogin TEXT);")

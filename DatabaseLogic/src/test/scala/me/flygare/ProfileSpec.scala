@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 
 import _root_.me.flygare.handlers.ProfileHandler
-import _root_.me.flygare.models.Profile
+import _root_.me.flygare.models.ProfileDB
 import _root_.me.flygare.traits.SparkConnection
 import org.scalatest._
 
@@ -51,14 +51,14 @@ class ProfileSpec extends FunSpec with SparkConnection {
   }
 
   describe("getProfiles()") {
-    it("should return an array with profiles") {
+    it("should return an array with profiles with ProfileDB format") {
       val dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'")
       val currentDate = dateFormat.format(Calendar.getInstance().getTime)
 
       val profle = profileHandler.createProfile("Lars", "Larsson", "0603225533", "larslarsson@gmail.com", "larstheboss", "LampaGolvMatta45", "I'm Lars Larsson.", "http://larslarsson.com", "127.0.0.1", currentDate)
       val profiles = profileHandler.getProfiles
 
-      assert(profiles.getClass == new Array[Profile](0).getClass)
+      assert(profiles.getClass == new Array[ProfileDB](0).getClass)
     }
   }
 }

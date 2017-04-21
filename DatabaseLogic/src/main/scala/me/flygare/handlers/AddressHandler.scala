@@ -17,7 +17,7 @@ class AddressHandler {
   /*
    * CREATE
    */
-  def createAddress(street: String, zipcode: Int, city: String, county: String, country: String): AddressDB = {
+  def createAddress(street: String, zipcode: String, city: String, county: String, country: String): AddressDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
     val address = AddressDB(UUID, street, zipcode, city, county, country)
@@ -46,7 +46,7 @@ class AddressHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .map(row => AddressDB(
           row.getAs[String]("key"),
-          row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
+          row.getAs[String]("street"), row.getAs[String]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
         .collect()
 
@@ -62,7 +62,7 @@ class AddressHandler {
         .load()
         .map(row => AddressDB(
           row.getAs[String]("key"),
-          row.getAs[String]("street"), row.getAs[Int]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
+          row.getAs[String]("street"), row.getAs[String]("zipcode"), row.getAs[String]("city"), row.getAs[String]("county"), row.getAs[String]("country")
         ))
         .collect()
 

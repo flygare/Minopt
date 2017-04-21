@@ -1,7 +1,7 @@
 package me.flygare
 
 import _root_.me.flygare.handlers.PersonHandler
-import _root_.me.flygare.models.Person
+import _root_.me.flygare.models.PersonDB
 import _root_.me.flygare.traits.SparkConnection
 import org.scalatest._
 
@@ -34,11 +34,11 @@ class PersonSpec extends FunSpec with SparkConnection {
   }
 
   describe("getPersons()") {
-    it("should return an array with persons") {
+    it("should return an array with persons of type PersonDB") {
       val person = personHandler.createPerson("Lars", "Larsson")
       val persons = personHandler.getPersons
 
-      assert(persons.getClass == new Array[Person](0).getClass)
+      assert(persons.getClass == new Array[PersonDB](0).getClass)
     }
   }
 }
