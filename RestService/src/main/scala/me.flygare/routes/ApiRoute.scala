@@ -10,18 +10,18 @@ object ApiRoute extends HttpConnection with HttpConfig {
   val route =
     pathPrefix("api") {
       delete {
-        complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remotePort$remotePath")))
+        complete(Http().singleRequest(HttpRequest(DELETE, uri = s"$remoteHost:$remoteAddressPort$remotePath")))
       }
       path("persons") {
         get {
           parameters('rows) {
             (rows) =>
-              complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/persons?rows=$rows")))
+              complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePersonPort$remotePath/persons?rows=$rows")))
           }
         } ~
           post {
             entity(as[String]) {
-              data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
+              data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePersonPort$remotePath/persons", entity = HttpEntity(MediaTypes.`application/json`, data))))
             }
           }
       } ~
@@ -29,12 +29,12 @@ object ApiRoute extends HttpConnection with HttpConfig {
           get {
             parameters('rows) {
               (rows) =>
-                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/addresses?rows=$rows")))
+                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remoteAddressPort$remotePath/addresses?rows=$rows")))
             }
           } ~
             post {
               entity(as[String]) {
-                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remoteAddressPort$remotePath/addresses", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
             }
         } ~
@@ -42,12 +42,12 @@ object ApiRoute extends HttpConnection with HttpConfig {
           get {
             parameters('rows) {
               (rows) =>
-                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remotePort$remotePath/profiles?rows=$rows")))
+                complete(Http().singleRequest(HttpRequest(uri = s"$remoteHost:$remoteProfilePort$remotePath/profiles?rows=$rows")))
             }
           } ~
             post {
               entity(as[String]) {
-                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remotePort$remotePath/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
+                data => complete(Http().singleRequest(HttpRequest(POST, uri = s"$remoteHost:$remoteProfilePort$remotePath/profiles", entity = HttpEntity(MediaTypes.`application/json`, data))))
               }
             }
         }
