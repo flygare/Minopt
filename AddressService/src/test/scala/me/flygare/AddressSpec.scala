@@ -1,8 +1,8 @@
 package me.flygare
 
-import _root_.me.flygare.handlers.AddressHandler
-import _root_.me.flygare.models.AddressDB
-import _root_.me.flygare.traits.SparkConnection
+import me.flygare.handlers.AddressHandler
+import me.flygare.models.AddressDB
+import me.flygare.traits.SparkConnection
 import org.scalatest._
 
 class AddressSpec extends FunSpec with SparkConnection {

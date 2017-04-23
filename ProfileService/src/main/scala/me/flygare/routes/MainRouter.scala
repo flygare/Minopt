@@ -24,7 +24,7 @@ object MainRouter extends HttpConnection {
           get {
             parameters('rows) {
               (rows) =>
-                complete(profileHandler.getProfiles(0))
+                complete(profileHandler.getProfiles(rows.toInt))
             }
           } ~
             post {

@@ -3,8 +3,8 @@ package me.flygare
 import org.scalatest.{Matchers, WordSpec}
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import _root_.me.flygare.utils.HttpConfig
-import _root_.me.flygare.routes.MainRouter
+import me.flygare.utils.HttpConfig
+import me.flygare.routes.MainRouter
 import akka.http.scaladsl.server.Route
 import me.flygare.traits.SparkConnection
 

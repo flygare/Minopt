@@ -1,8 +1,8 @@
 package me.flygare
 
-import _root_.me.flygare.handlers.PersonHandler
-import _root_.me.flygare.models.PersonDB
-import _root_.me.flygare.traits.SparkConnection
+import me.flygare.handlers.PersonHandler
+import me.flygare.models.PersonDB
+import me.flygare.traits.SparkConnection
 import org.scalatest._
 
 class PersonSpec extends FunSpec with SparkConnection {

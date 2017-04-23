@@ -1,13 +1,10 @@
-package me.flygare
+package me.flygare.controllers
 
 import akka.http.scaladsl.Http
 import me.flygare.routes.MainRouter
+import me.flygare.traits.SparkConnection
 import me.flygare.utils.{HttpConfig, HttpConnection}
 
-object RestAPI extends App with HttpConnection with HttpConfig{
-
+object PersonService extends App with SparkConnection with HttpConnection with HttpConfig {
   Http().bindAndHandle(MainRouter.routes,"localhost",port)
-
-  println(s"Server started at $port")
-
 }

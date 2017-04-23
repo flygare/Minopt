@@ -3,9 +3,9 @@ package me.flygare
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-import _root_.me.flygare.handlers.ProfileHandler
-import _root_.me.flygare.models.ProfileDB
-import _root_.me.flygare.traits.SparkConnection
+import me.flygare.handlers.ProfileHandler
+import me.flygare.models.ProfileDB
+import me.flygare.traits.SparkConnection
 import org.scalatest._
 
 class ProfileSpec extends FunSpec with SparkConnection {
