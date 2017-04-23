@@ -8,7 +8,7 @@ import me.flygare.routes.MainRouter
 import akka.http.scaladsl.server.Route
 import me.flygare.traits.SparkConnection
 
-class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig with SparkConnection{
+class ProfileRestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig with SparkConnection{
 
   val testProfile = "{\n  \"firstname\": \"Jeremie\",\n  \"lastname\": \"Kassulke\",\n  \"phonenumber\": \"1-671-751-4138 x40895\",\n  \"email\": \"Felix84@yahoo.com\",\n  \"username\": \"Ashtyn_Haley24\",\n  \"password\": \"shgyMZJOCJXuDkdfLcIP\",\n  \"description\": \"Dignissimos fuga cumque temporibus voluptas.\",\n  \"website\": \"http://terrance.com\",\n  \"lastip\": \"93.86.125.24\",\n  \"lastlogin\": \"2017-04-20T11:48:01.856Z\"\n}"
 

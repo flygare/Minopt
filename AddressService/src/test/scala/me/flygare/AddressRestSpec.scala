@@ -8,7 +8,7 @@ import me.flygare.routes.MainRouter
 import akka.http.scaladsl.server.Route
 import me.flygare.traits.SparkConnection
 
-class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig with SparkConnection {
+class AddressRestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig with SparkConnection {
 
   val testAddress = "{\n  \"street\": \"Jerde Fords\",\n  \"zipcode\": \"89834-4106\",\n  \"city\": \"Mariebury\",\n  \"county\": \"Borders\",\n  \"country\": \"Faroe Islands\"\n}"
 
