@@ -11,10 +11,10 @@ lazy val monolithic = (project in file("Monolithic"))
     name := "Monolithic"
   )
 
-lazy val rest = (project in file("Rest"))
+lazy val restService = (project in file("RestService"))
   .settings(
     commonSettings,
-    name := "REST",
+    name := "RestService",
     libraryDependencies ++= Seq(
       "com.typesafe.akka" %% "akka-http-core" % "10.0.5",
       "com.typesafe.akka" %% "akka-http" % "10.0.5",
@@ -25,13 +25,13 @@ lazy val rest = (project in file("Rest"))
     ),
     mainClass in (Compile,run) := Some(s"$organization.$name"),
     mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "rest.jar"
+    assemblyJarName in assembly := "restService.jar"
   )
 
-lazy val databaseLogic = (project in file("DatabaseLogic"))
+lazy val addressService = (project in file("AddressService"))
   .settings(
     commonSettings,
-    name := "DatabaseLogic",
+    name := "AddressService",
     libraryDependencies ++= Seq(
       "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1",
       "org.apache.spark" %% "spark-core" % "2.1.0",
@@ -57,7 +57,71 @@ lazy val databaseLogic = (project in file("DatabaseLogic"))
       case x => MergeStrategy.first
     },
     mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "databaseLogic.jar"
+    assemblyJarName in assembly := "addressService.jar"
+  )
+
+lazy val profileService = (project in file("ProfileService"))
+  .settings(
+    commonSettings,
+    name := "ProfileService",
+    libraryDependencies ++= Seq(
+      "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1",
+      "org.apache.spark" %% "spark-core" % "2.1.0",
+      "org.apache.spark" %% "spark-sql" % "2.1.0",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+      "com.typesafe.akka" %% "akka-http-core" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
+
+      // To use jackson 2.8.7 over 2.6.5, todo fix the duplicate in dependencies
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.7",
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7"
+    ),
+    resolvers ++= Seq(
+      "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
+
+    ),
+    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    assemblyMergeStrategy in assembly := {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
+    },
+    mainClass in assembly := Some(s"$organization.$name"),
+    assemblyJarName in assembly := "profileService.jar"
+  )
+
+lazy val personService = (project in file("PersonService"))
+  .settings(
+    commonSettings,
+    name := "PersonService",
+    libraryDependencies ++= Seq(
+      "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.1",
+      "org.apache.spark" %% "spark-core" % "2.1.0",
+      "org.apache.spark" %% "spark-sql" % "2.1.0",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+      "com.typesafe.akka" %% "akka-http-core" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
+
+      // To use jackson 2.8.7 over 2.6.5, todo fix the duplicate in dependencies
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.7",
+      "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7"
+    ),
+    resolvers ++= Seq(
+      "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
+
+    ),
+    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    assemblyMergeStrategy in assembly := {
+      case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+      case x => MergeStrategy.first
+    },
+    mainClass in assembly := Some(s"$organization.$name"),
+    assemblyJarName in assembly := "personService.jar"
   )
 
 enablePlugins(AssemblyPlugin)
