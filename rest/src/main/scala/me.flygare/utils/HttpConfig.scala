@@ -4,7 +4,7 @@ import java.io.File
 import com.typesafe.config.ConfigFactory
 
 trait HttpConfig{
-  val parsedConfig = ConfigFactory.parseFile(new File("src/main/resources/application.conf"))
+  val parsedConfig = ConfigFactory.parseFile(new File("rest/src/main/resources/application.conf"))
   val conf = ConfigFactory.load(parsedConfig)
 
   val interface = conf.getString("http.local.interface")

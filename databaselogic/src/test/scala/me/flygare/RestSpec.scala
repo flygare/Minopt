@@ -1,15 +1,14 @@
 package me.flygare
 
-package me.flygare
-
 import org.scalatest.{Matchers, WordSpec}
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import _root_.me.flygare.utils.HttpConfig
 import _root_.me.flygare.routes.MainRouter
 import akka.http.scaladsl.server.Route
+import me.flygare.traits.SparkConnection
 
-class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig {
+class RestSpec extends WordSpec with Matchers with ScalatestRouteTest with HttpConfig with SparkConnection{
 
   val testPerson = "{\n  \"firstname\": \"Claire\",\n  \"lastname\": \"Kunde\"\n}"
   val testAddress = "{\n  \"street\": \"Jerde Fords\",\n  \"zipcode\": \"89834-4106\",\n  \"city\": \"Mariebury\",\n  \"county\": \"Borders\",\n  \"country\": \"Faroe Islands\"\n}"

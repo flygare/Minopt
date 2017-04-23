@@ -5,7 +5,30 @@ lazy val commonSettings = Seq(
   test in assembly := {}
 )
 
-lazy val root = (project in file("."))
+lazy val monolithic = (project in file("Monolithic"))
+  .settings(
+    commonSettings,
+    name := "Monolithic"
+  )
+
+lazy val rest = (project in file("Rest"))
+  .settings(
+    commonSettings,
+    name := "REST",
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-http-core" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-testkit" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-spray-json" % "10.0.5",
+      "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
+      "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+    ),
+    mainClass in (Compile,run) := Some(s"$organization.$name"),
+    mainClass in assembly := Some(s"$organization.$name"),
+    assemblyJarName in assembly := "rest.jar"
+  )
+
+lazy val databaseLogic = (project in file("DatabaseLogic"))
   .settings(
     commonSettings,
     name := "DatabaseLogic",
@@ -21,11 +44,11 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
 
       // To use jackson 2.8.7 over 2.6.5, todo fix the duplicate in dependencies
-      "com.fasterxml.jackson.module" % "jackson-module-scala_2.11" % "2.8.7",
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.7",
       "com.fasterxml.jackson.core" % "jackson-databind" % "2.8.7"
     ),
     resolvers ++= Seq(
-        "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
+      "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 
     ),
     mainClass in(Compile, run) := Some(s"$organization.$name"),
@@ -34,7 +57,8 @@ lazy val root = (project in file("."))
       case x => MergeStrategy.first
     },
     mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "DatabaseLogic.jar"
+    assemblyJarName in assembly := "databaseLogic.jar"
   )
 
 enablePlugins(AssemblyPlugin)
+

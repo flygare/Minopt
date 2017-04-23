@@ -4,13 +4,10 @@ scala:
   - 2.11.8
 jdk:
   - oraclejdk8
-env:
-  - DIR=REST
-  - DIR=DatabaseLogic
 sudo:
   - required
 script:
-  - cd $DIR && sbt assembly && sbt clean coverage test coverageReport
+  - sbt assembly && sbt clean coverage test coverageReport
 cache:
   directories:
     - $HOME/.ivy2/cache
