@@ -23,8 +23,8 @@ lazy val restService = (project in file("RestService"))
       "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
       "org.scalatest" %% "scalatest" % "3.0.1" % "test"
     ),
-    mainClass in (Compile,run) := Some(s"$organization.$name"),
-    mainClass in assembly := Some(s"$organization.$name"),
+    mainClass in (Compile,run) := Some(s"$organization.$name.RestService"),
+    mainClass in assembly := Some(s"$organization.$name.RestService"),
     assemblyJarName in assembly := "restService.jar"
   )
 
@@ -49,15 +49,15 @@ lazy val addressService = (project in file("AddressService"))
     ),
     resolvers ++= Seq(
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
-
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.AddressService"),
+    mainClass in assembly := Some(s"$organization.$name.controllers.AddressService"),
+    assemblyJarName in assembly := "addressService.jar",
     assemblyMergeStrategy in assembly := {
+      case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
-    },
-    mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "addressService.jar"
+    }
   )
 
 lazy val profileService = (project in file("ProfileService"))
@@ -83,13 +83,14 @@ lazy val profileService = (project in file("ProfileService"))
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.ProfileService"),
+    mainClass in assembly := Some(s"$organization.$name.controllers.ProfileService"),
+    assemblyJarName in assembly := "profileService.jar",
     assemblyMergeStrategy in assembly := {
+      case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
-    },
-    mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "profileService.jar"
+    }
   )
 
 lazy val personService = (project in file("PersonService"))
@@ -115,13 +116,14 @@ lazy val personService = (project in file("PersonService"))
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.PersonService"),
+    mainClass in assembly := Some(s"$organization.$name.controllers.PersonService"),
+    assemblyJarName in assembly := "personService.jar",
     assemblyMergeStrategy in assembly := {
+      case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
       case PathList("META-INF", xs @ _*) => MergeStrategy.discard
       case x => MergeStrategy.first
-    },
-    mainClass in assembly := Some(s"$organization.$name"),
-    assemblyJarName in assembly := "personService.jar"
+    }
   )
 
 enablePlugins(AssemblyPlugin)

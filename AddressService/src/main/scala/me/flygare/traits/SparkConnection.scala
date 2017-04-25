@@ -10,7 +10,7 @@ import com.datastax.spark.connector.rdd.ReadConf
 
 
 trait SparkConnection {
-  val warehouseLocation = "file:${system:user.dir}/spark-warehouse"
+  val warehouseLocation = "file:///${system:user.dir}/spark-warehouse"
   val conf = new SparkConf(true)
     .setAppName("Minopt")
     .setMaster("local[2]")
@@ -18,6 +18,7 @@ trait SparkConnection {
     .set("spark.cassandra.auth.username", "cassandra")
     .set("spark.cassandra.auth.password", "cassandra")
     .set("spark.cassandra.connection.connections_per_executor_max", "4")
+    .set("spark.sql.warehouse.dir", warehouseLocation)
 
   val spark = SparkSession
     .builder()
