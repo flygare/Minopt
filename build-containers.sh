@@ -1,6 +1,6 @@
 #!/bin/sh
 
 sbt assembly
-pushd ProfileService
-docker build -t profile_service .
-popd
+cd ProfileService
+docker build -t minopt-profile-service .
+cd ..
