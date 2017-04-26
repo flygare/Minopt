@@ -20,6 +20,7 @@ trait SparkConnection {
     .set("spark.cassandra.connection.connections_per_executor_max", "4")
     .set("spark.sql.warehouse.dir", warehouseLocation)
 
+
   val spark = SparkSession
     .builder()
     .appName("Minopt")
