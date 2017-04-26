@@ -23,8 +23,8 @@ lazy val restService = (project in file("RestService"))
       "com.typesafe.akka" %% "akka-http-jackson" % "10.0.5",
       "org.scalatest" %% "scalatest" % "3.0.1" % "test"
     ),
-    mainClass in (Compile,run) := Some(s"$organization.$name.RestService"),
-    mainClass in assembly := Some(s"$organization.$name.RestService"),
+    mainClass in (Compile,run) := Some(s"$organization.$name"),
+    mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "restService.jar"
   )
 
@@ -50,8 +50,8 @@ lazy val addressService = (project in file("AddressService"))
     resolvers ++= Seq(
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.AddressService"),
-    mainClass in assembly := Some(s"$organization.$name.controllers.AddressService"),
+    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "addressService.jar",
     assemblyMergeStrategy in assembly := {
       case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
@@ -83,8 +83,8 @@ lazy val profileService = (project in file("ProfileService"))
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.ProfileService"),
-    mainClass in assembly := Some(s"$organization.$name.controllers.ProfileService"),
+    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "profileService.jar",
     assemblyMergeStrategy in assembly := {
       case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
@@ -116,8 +116,8 @@ lazy val personService = (project in file("PersonService"))
       "Spark Packages Repo" at "https://dl.bintray.com/spark-packages/maven"
 
     ),
-    mainClass in(Compile, run) := Some(s"$organization.$name.controllers.PersonService"),
-    mainClass in assembly := Some(s"$organization.$name.controllers.PersonService"),
+    mainClass in(Compile, run) := Some(s"$organization.$name"),
+    mainClass in assembly := Some(s"$organization.$name"),
     assemblyJarName in assembly := "personService.jar",
     assemblyMergeStrategy in assembly := {
       case PathList("META-INF", "services", "org.apache.hadoop.fs.FileSystem") => MergeStrategy.filterDistinctLines
