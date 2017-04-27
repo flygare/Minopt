@@ -5,6 +5,4 @@ RUN ["/bin/sh", "-c", "mkdir -p /service"]
 WORKDIR /service
 COPY target/scala-2.11/personService.jar /service/personService.jar
 
-EXPOSE 3002
-
 CMD ["java", "-cp", "personService.jar", "me.flygare.PersonService"]
