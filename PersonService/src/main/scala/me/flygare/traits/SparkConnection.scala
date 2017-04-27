@@ -14,7 +14,7 @@ trait SparkConnection {
   val conf = new SparkConf(true)
     .setAppName("Minopt")
     .setMaster("local[2]")
-    .set("spark.cassandra.connection.host", "127.0.0.1")
+    .set("spark.cassandra.connection.host", "cassandra")
     .set("spark.cassandra.auth.username", "cassandra")
     .set("spark.cassandra.auth.password", "cassandra")
     .set("spark.cassandra.connection.connections_per_executor_max", "4")

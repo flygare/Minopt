@@ -6,7 +6,7 @@ import me.flygare.traits.SparkConnection
 import me.flygare.utils.{HttpConfig, HttpConnection}
 
 object AddressService extends App with SparkConnection with HttpConnection with HttpConfig {
-  Http().bindAndHandle(MainRouter.routes, "localhost", port)
+  Http().bindAndHandle(MainRouter.routes, s"$interface", port)
 
   println(s"Address service started at $port")
 }

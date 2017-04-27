@@ -17,9 +17,11 @@ PERSON_ALIAS=person
 PROFILE_IMAGE=minopt-profile-service
 PROFILE_CONTAINER_NAME=minopt-profile-service
 PROFILE_ALIAS=profile
+# Rest variables
+REST_IMAGE=minopt-rest-service
+REST_CONTAINER_NAME=minopt-rest-service
+REST_ALIAS=rest
 
-############################################################################
-############################################################################
 ############################################################################
 
 # Create network
@@ -39,8 +41,6 @@ docker stop $PROFILE_CONTAINER_NAME 2>/dev/null
 docker rm $PROFILE_CONTAINER_NAME 2>/dev/null
 docker run --network=$NETWORK_NAME --network-alias=$PROFILE_ALIAS --link=$CASSANDRA_CONTAINER_NAME:$CASSANDRA_ALIAS --name $PROFILE_CONTAINER_NAME -d $PROFILE_IMAGE
 
-############################################################################
-
 # Stop, remove and start address service
 docker stop $ADDRESS_CONTAINER_NAME 2>/dev/null
 docker rm $ADDRESS_CONTAINER_NAME 2>/dev/null
@@ -50,3 +50,10 @@ docker run --network=$NETWORK_NAME --network-alias=$ADDRESS_ALIAS --link=$CASSAN
 docker stop $PERSON_CONTAINER_NAME 2>/dev/null
 docker rm $PERSON_CONTAINER_NAME 2>/dev/null
 docker run --network=$NETWORK_NAME --network-alias=$PERSON_ALIAS --link=$CASSANDRA_CONTAINER_NAME:$CASSANDRA_ALIAS --name $PERSON_CONTAINER_NAME -d $PERSON_IMAGE
+
+############################################################################
+
+# Stop, remove and start rest service
+docker stop $REST_CONTAINER_NAME 2>/dev/null
+docker rm $REST_CONTAINER_NAME 2>/dev/null
+docker run --network=$NETWORK_NAME --network-alias=$REST_ALIAS --link=$CASSANDRA_CONTAINER_NAME:$CASSANDRA_ALIAS --name $REST_CONTAINER_NAME -d -p 3000:3000 $REST_IMAGE
