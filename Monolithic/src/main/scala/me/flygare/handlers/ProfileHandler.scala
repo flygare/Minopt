@@ -32,7 +32,6 @@ class ProfileHandler {
 
     profileDB
   }
-
   def createProfile(firstname: String, lastname: String, phonenumber: String, email: String, username: String, password: String, description: String, website: String, lastip: String, lastlogin: String): ProfileDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
@@ -48,7 +47,6 @@ class ProfileHandler {
 
     profile
   }
-
   /*
    * GET
    */

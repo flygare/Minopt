@@ -16,10 +16,6 @@ object MainRouter extends HttpConnection {
   val routes =
     respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
       pathPrefix("dblogic") {
-        delete {
-          addressHandler.deleteAddresses
-          complete("Cassandra truncated")
-        }
           path("addresses") {
             get {
               parameters('rows) {
@@ -29,7 +25,9 @@ object MainRouter extends HttpConnection {
             } ~
               post {
                 entity(as[Address]) {
-                  address => complete(s"The address you sent were: $address")
+                  address =>
+                    addressHandler.createAddress(address)
+                    complete(s"The address you sent were: $address")
                 }
               }
           }

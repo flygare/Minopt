@@ -5,7 +5,6 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
 class AddressHandler {
-
   private val spark = SparkSession.builder.getOrCreate()
 
   import spark.implicits._
@@ -18,21 +17,6 @@ class AddressHandler {
   /*
    * CREATE
    */
-  def createAddress(street: String, zipcode: String, city: String, county: String, country: String): AddressDB = {
-    val UUID = java.util.UUID.randomUUID.toString
-
-    val address = AddressDB(UUID, street, zipcode, city, county, country)
-
-    Seq(address)
-      .toDS()
-      .write
-      .format(DatasetFormat)
-      .options(TableOption)
-      .mode("append")
-      .save()
-
-    address
-  }
   def createAddress(address: Address): AddressDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
@@ -47,6 +31,22 @@ class AddressHandler {
       .save()
 
     addressDB
+  }
+
+  def createAddress(street: String, zipcode: String, city: String, county: String, country: String): AddressDB = {
+    val UUID = java.util.UUID.randomUUID.toString
+
+    val address = AddressDB(UUID, street, zipcode, city, county, country)
+
+    Seq(address)
+      .toDS()
+      .write
+      .format(DatasetFormat)
+      .options(TableOption)
+      .mode("append")
+      .save()
+
+    address
   }
   /*
    * GET

@@ -16,10 +16,6 @@ object MainRouter extends HttpConnection {
   val routes =
     respondWithDefaultHeaders(RawHeader("Access-Control-Allow-Origin", "*"), RawHeader("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE"), RawHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")) {
       pathPrefix("dblogic") {
-        delete {
-          personHandler.deletePersons
-          complete("Cassandra truncated")
-        }
         path("persons") {
           get {
             parameters('rows) {
