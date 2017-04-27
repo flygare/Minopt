@@ -26,16 +26,16 @@ function checkRowRadios() {
 
 $(function(){
     $("#GET-btn").click(function(){
-        console.log(BASEURL + objectType + "/?rows=" + nrOfRows);
-
         var objectType = checkObjectRadios();
         var nrOfRows = checkRowRadios();
 
+        var URL = BASEURL + objectType + "?rows=" + nrOfRows
+        console.log(URL);
+
         $.ajax({
             type: "GET",
-            url: BASEURL + objectType + "/?rows=" + nrOfRows,
-            contentType: "application/json; charset=utf-8",
             dataType: "json",
+            url: URL,
             success: function(data) {
                 $("#response").text(JSON.stringify(data));
             },
@@ -46,10 +46,12 @@ $(function(){
     });
 
     $("#POST-btn").click(function(){
-        console.log(BASEURL + objectType + "/");
-
         var objectType = checkObjectRadios();
         var nrOfRows = checkRowRadios();
+
+        var URL = BASEURL + objectType;
+        console.log(URL);
+
         var data = "{}"
 
         if (objectType == "persons") {
@@ -88,10 +90,10 @@ $(function(){
         console.log(data);
         $.ajax({
             type: "POST",
-            url: BASEURL + objectType + "/",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             data: data,
+            url: URL,
             success: function(data) {
                 $("#response").text(JSON.stringify(data));
             },
@@ -107,13 +109,14 @@ $(function(){
         var objectType = checkObjectRadios();
         var nrOfRows = checkRowRadios();
 
-        console.log(BASEURL + objectType + "/");
+        var URL = BASEURL + objectType;
+        console.log(URL);
 
         $.ajax({
             type: "DELETE",
-            url: BASEURL + objectType + "/",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            url: URL,
             success: function(data) {
                 $("#response").text(JSON.stringify(data));
             },
