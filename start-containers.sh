@@ -44,7 +44,7 @@ docker run --network=$NETWORK_NAME --network-alias=$PROFILE_ALIAS --link=$CASSAN
 # Stop, remove and start address service
 docker stop $ADDRESS_CONTAINER_NAME 2>/dev/null
 docker rm $ADDRESS_CONTAINER_NAME 2>/dev/null
-docker run --network=$NETWORK_NAME --network-alias=$ADDRESS_ALIAS --link=$CASSANDRA_CONTAINER_NAME:$CASSANDRA_ALIAS --name $ADDRESS_CONTAINER_NAME -d -p $ADDRESS_IMAGE
+docker run --network=$NETWORK_NAME --network-alias=$ADDRESS_ALIAS --link=$CASSANDRA_CONTAINER_NAME:$CASSANDRA_ALIAS --name $ADDRESS_CONTAINER_NAME -d $ADDRESS_IMAGE
 
 # Stop, remove and start person service
 docker stop $PERSON_CONTAINER_NAME 2>/dev/null
