@@ -25,9 +25,10 @@ object MainRouter extends HttpConnection {
           } ~
             post {
               entity(as[Profile]) {
-                profile =>
+                profile => {
                   profileHandler.createProfile(profile)
                   complete(s"The profile you sent were: $profile")
+                }
               }
             }
         }
