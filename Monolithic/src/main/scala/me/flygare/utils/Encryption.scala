@@ -24,7 +24,7 @@ object Encryption {
     var keyBytes: Array[Byte] = (SALT + key).getBytes("UTF-8")
     val sha: MessageDigest = MessageDigest.getInstance("SHA-256")
     keyBytes = sha.digest(keyBytes)
-    keyBytes = util.Arrays.copyOf(keyBytes, 2048)
+    keyBytes = util.Arrays.copyOf(keyBytes, 16)
     new SecretKeySpec(keyBytes, "AES")
   }
 

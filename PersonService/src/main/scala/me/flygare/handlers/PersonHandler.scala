@@ -5,7 +5,7 @@ import me.flygare.utils.Encryption
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
-class PersonHandler {
+class PersonHandler extends Serializable{
   private val spark = SparkSession.builder.getOrCreate()
 
   import spark.implicits._
