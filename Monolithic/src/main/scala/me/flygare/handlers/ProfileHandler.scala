@@ -1,6 +1,7 @@
 package me.flygare.handlers
 
 import me.flygare.models.{Profile, ProfileDB}
+import me.flygare.utils.Encryption
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
@@ -10,6 +11,7 @@ class ProfileHandler {
   import spark.implicits._
 
   private val Keyspace = "minopt"
+  private val EncryptionKey = "minopt"
   private val TableName = "profile"
   private val TableOption = Map("table" -> TableName, "keyspace" -> Keyspace)
   private val DatasetFormat = "org.apache.spark.sql.cassandra"
@@ -20,7 +22,7 @@ class ProfileHandler {
   def createProfile(profile: Profile): ProfileDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val profileDB = ProfileDB(UUID, profile.firstname, profile.lastname, profile.phonenumber, profile.email, profile.username, profile.password, profile.description, profile.website, profile.lastip, profile.lastlogin)
+    val profileDB = ProfileDB(UUID, Encryption.encrypt(EncryptionKey, profile.firstname), Encryption.encrypt(EncryptionKey, profile.lastname), Encryption.encrypt(EncryptionKey, profile.phonenumber), Encryption.encrypt(EncryptionKey, profile.email), Encryption.encrypt(EncryptionKey, profile.username), Encryption.encrypt(EncryptionKey, profile.password), Encryption.encrypt(EncryptionKey, profile.description), Encryption.encrypt(EncryptionKey, profile.website), Encryption.encrypt(EncryptionKey, profile.lastip), Encryption.encrypt(EncryptionKey, profile.lastlogin))
 
     Seq(profile)
       .toDS()
@@ -32,10 +34,11 @@ class ProfileHandler {
 
     profileDB
   }
+
   def createProfile(firstname: String, lastname: String, phonenumber: String, email: String, username: String, password: String, description: String, website: String, lastip: String, lastlogin: String): ProfileDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val profile = ProfileDB(UUID, firstname, lastname, phonenumber, email, username, password, description, website, lastip, lastlogin)
+    val profile = ProfileDB(UUID, Encryption.encrypt(EncryptionKey, firstname), Encryption.encrypt(EncryptionKey, lastname), Encryption.encrypt(EncryptionKey, phonenumber), Encryption.encrypt(EncryptionKey, email), Encryption.encrypt(EncryptionKey, username), Encryption.encrypt(EncryptionKey, password), Encryption.encrypt(EncryptionKey, description), Encryption.encrypt(EncryptionKey, website), Encryption.encrypt(EncryptionKey, lastip), Encryption.encrypt(EncryptionKey, lastlogin))
 
     Seq(profile)
       .toDS()
@@ -47,6 +50,7 @@ class ProfileHandler {
 
     profile
   }
+
   /*
    * GET
    */
@@ -60,8 +64,9 @@ class ProfileHandler {
         .filter(row => row.getAs[String]("key").equals(key))
         .map(row => ProfileDB(
           row.getAs[String]("key"),
-          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
-          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("phonenumber")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("email")), Encryption.decrypt(EncryptionKey, row.getAs[String]("username")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("password")), Encryption.decrypt(EncryptionKey, row.getAs[String]("description")), Encryption.decrypt(EncryptionKey, row.getAs[String]("website")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastip")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastlogin"))
         ))
         .collect()
 
@@ -78,8 +83,9 @@ class ProfileHandler {
         .limit(rows)
         .map(row => ProfileDB(
           row.getAs[String]("key"),
-          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
-          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("phonenumber")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("email")), Encryption.decrypt(EncryptionKey, row.getAs[String]("username")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("password")), Encryption.decrypt(EncryptionKey, row.getAs[String]("description")), Encryption.decrypt(EncryptionKey, row.getAs[String]("website")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastip")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastlogin"))
         ))
         .collect()
 
@@ -95,8 +101,9 @@ class ProfileHandler {
         .load()
         .map(row => ProfileDB(
           row.getAs[String]("key"),
-          row.getAs[String]("firstname"), row.getAs[String]("lastname"), row.getAs[String]("phonenumber"), row.getAs[String]("email"), row.getAs[String]("username"),
-          row.getAs[String]("password"), row.getAs[String]("description"), row.getAs[String]("website"), row.getAs[String]("lastip"), row.getAs[String]("lastlogin")
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("phonenumber")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("email")), Encryption.decrypt(EncryptionKey, row.getAs[String]("username")),
+          Encryption.decrypt(EncryptionKey, row.getAs[String]("password")), Encryption.decrypt(EncryptionKey, row.getAs[String]("description")), Encryption.decrypt(EncryptionKey, row.getAs[String]("website")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastip")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastlogin"))
         ))
         .collect()
 

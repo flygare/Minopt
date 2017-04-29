@@ -1,6 +1,7 @@
 package me.flygare.handlers
 
 import me.flygare.models.{Person, PersonDB}
+import me.flygare.utils.Encryption
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.cassandra._
 
@@ -10,6 +11,7 @@ class PersonHandler {
   import spark.implicits._
 
   private val Keyspace = "minopt"
+  private val EncryptionKey = "minopt"
   private val TableName = "person"
   private val TableOption = Map("table" -> TableName, "keyspace" -> Keyspace)
   private val DatasetFormat = "org.apache.spark.sql.cassandra"
@@ -20,7 +22,7 @@ class PersonHandler {
   def createPerson(person: Person): PersonDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val personDB = PersonDB(UUID, person.firstname, person.lastname)
+    val personDB = PersonDB(UUID, Encryption.encrypt(EncryptionKey,person.firstname), Encryption.encrypt(EncryptionKey,person.lastname))
 
     Seq(personDB)
     .toDS()
@@ -35,7 +37,7 @@ class PersonHandler {
   def createPerson(firstname: String, lastname: String): PersonDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val person = PersonDB(UUID, firstname, lastname)
+    val person = PersonDB(UUID, Encryption.encrypt(EncryptionKey,firstname), Encryption.encrypt(EncryptionKey,lastname))
 
     Seq(person)
       .toDS()
@@ -59,7 +61,7 @@ class PersonHandler {
         .cassandraFormat(TableName, Keyspace)
         .load()
         .filter(row => row.getAs[String]("key").equals(key))
-        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .map(row => PersonDB(row.getAs[String]("key"), Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname"))))
         .collect()
 
     person(0)
@@ -73,7 +75,7 @@ class PersonHandler {
         .cassandraFormat(TableName, Keyspace)
         .load()
         .limit(rows)
-        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .map(row => PersonDB(row.getAs[String]("key"), Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname"))))
         .collect()
 
     persons
@@ -86,7 +88,7 @@ class PersonHandler {
         .options(TableOption)
         .cassandraFormat(TableName, Keyspace)
         .load()
-        .map(row => PersonDB(row.getAs[String]("key"), row.getAs[String]("firstname"), row.getAs[String]("lastname")))
+        .map(row => PersonDB(row.getAs[String]("key"), Encryption.decrypt(EncryptionKey, row.getAs[String]("firstname")), Encryption.decrypt(EncryptionKey, row.getAs[String]("lastname"))))
         .collect()
 
     persons
