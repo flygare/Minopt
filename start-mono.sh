@@ -8,7 +8,7 @@ rm -rf /var/lib/cassandra/data/system/*
 service cassandra start
 
 # Build and execute Monolithic fat jar
-pushd /Monolithic
+cd Monolithic
 sbt assembly
 java -jar /target/scala-2.11/monolithic.jar &> start-mono.log &
-popd
+cd ..
