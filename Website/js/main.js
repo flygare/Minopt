@@ -4,8 +4,8 @@ function checkObjectRadios() {
     var r = document.getElementsByName("object");
     var object = "";
 
-    for(var i=0; i < r.length; i++){
-        if(r[i].checked) {
+    for (var i = 0; i < r.length; i++) {
+        if (r[i].checked) {
             object = r[i].id;
         }
     }
@@ -16,20 +16,21 @@ function checkRowRadios() {
     var r = document.getElementsByName("rows");
     var rows = "";
 
-    for(var i=0; i < r.length; i++){
-        if(r[i].checked) {
+    for (var i = 0; i < r.length; i++) {
+        if (r[i].checked) {
             rows = r[i].id;
         }
     }
     return rows.split("-")[0];
 }
 
-$(function(){
-    $("#GET-btn").click(function(){
+$(function() {
+    $("#GET-btn").click(function() {
         var objectType = checkObjectRadios();
         var nrOfRows = checkRowRadios();
 
-        var URL = BASEURL + objectType + "?rows=" + nrOfRows
+        var URL = BASEURL + objectType + "?rows=" + nrOfRows;
+        // var URL = "http://127.0.0.1:3000/test/json";
         console.log(URL);
 
         $.ajax({
@@ -37,7 +38,8 @@ $(function(){
             dataType: "json",
             url: URL,
             success: function(data) {
-                $("#response").text(JSON.stringify(data));
+                data = JSON.stringify(data);
+                $("#response").text(JSON.stringify(JSON.parse(data), null, 2));
             },
             error: function(error) {
                 console.error(error);
@@ -45,7 +47,7 @@ $(function(){
         });
     });
 
-    $("#POST-btn").click(function(){
+    $("#POST-btn").click(function() {
         var objectType = checkObjectRadios();
         var nrOfRows = checkRowRadios();
 
@@ -95,6 +97,7 @@ $(function(){
             data: data,
             url: URL,
             success: function(data) {
+                data = JSON.stringify(data);
                 $("#response").text(JSON.stringify(data));
             },
             error: function(error) {
@@ -102,27 +105,6 @@ $(function(){
             }
         });
 
-        $("#response").text(JSON.stringify(JSON.parse(data),null,2));
-    });
-
-    $("#DELETE-btn").click(function(){
-        var objectType = checkObjectRadios();
-        var nrOfRows = checkRowRadios();
-
-        var URL = BASEURL + objectType;
-        console.log(URL);
-
-        $.ajax({
-            type: "DELETE",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            url: URL,
-            success: function(data) {
-                $("#response").text(JSON.stringify(data));
-            },
-            error: function(error) {
-                console.error(error);
-            }
-        });
+        $("#response").text(JSON.stringify(JSON.parse(data), null, 2));
     });
 });
