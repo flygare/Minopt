@@ -1,4 +1,4 @@
-FROM tomcat:8.0-jre8-alpine
+FROM openjdk:8-jre-alpine
 
 RUN ["/bin/sh", "-c", "mkdir -p /service"]
 ENV JAVA_OPTS="-XX:PermSize=2g -XX:MaxPermSize=1g"
