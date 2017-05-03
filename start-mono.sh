@@ -8,7 +8,6 @@ rm -rf /var/lib/cassandra/data/system/*
 service cassandra start
 
 # Build and execute Monolithic fat jar
-cd Monolithic
-sbt assembly
-java -jar /target/scala-2.11/monolithic.jar &> start-mono.log &
+cd Monolithic/
+java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic &> monolithic.logs
 cd ..

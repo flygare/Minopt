@@ -18,3 +18,6 @@ cd RestService
 docker build -t minopt-rest-service .
 cd ..
 
+cd Monolithic
+docker build -t minopt-mono .
+cd ..
