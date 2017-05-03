@@ -1,8 +1,10 @@
-FROM openjdk:8-jre-alpine
-
-RUN ["/bin/sh", "-c", "mkdir -p /mono"]
+FROM cassandra:3.0
 
 WORKDIR /mono
-COPY target/scala-2.11/monolithic.jar /service/monolithic.jar
 
-CMD ["java", "-cp", "monolithic.jar", "me.flygare.Monolithic"]
+COPY target/scala-2.11/monolithic.jar monolithic.jar
+COPY Application.conf Application.conf
+
+EXPOSE 3000
+
+CMD  cassandra ; sleep 15 ; java -cp monolithic.jar -Dconfig.file=Application.conf me.flygare.Monolithic
