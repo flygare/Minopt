@@ -9,5 +9,5 @@ service cassandra start
 
 # Build and execute Monolithic fat jar
 cd Monolithic/
-java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic &> monolithic.logs
+java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic 2> monolithic.logs
 cd ..
