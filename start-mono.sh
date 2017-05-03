@@ -11,5 +11,5 @@ sleep 15
 
 # Build and execute Monolithic fat jar
 cd Monolithic/
-nohup java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic
+nohup java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic 2>&1 &&
 cd ..
