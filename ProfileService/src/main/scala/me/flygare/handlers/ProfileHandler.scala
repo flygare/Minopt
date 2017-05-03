@@ -24,7 +24,7 @@ class ProfileHandler extends Serializable{
 
     val profileDB = ProfileDB(UUID, Encryption.encrypt(EncryptionKey, profile.firstname), Encryption.encrypt(EncryptionKey, profile.lastname), Encryption.encrypt(EncryptionKey, profile.phonenumber), Encryption.encrypt(EncryptionKey, profile.email), Encryption.encrypt(EncryptionKey, profile.username), Encryption.encrypt(EncryptionKey, profile.password), Encryption.encrypt(EncryptionKey, profile.description), Encryption.encrypt(EncryptionKey, profile.website), Encryption.encrypt(EncryptionKey, profile.lastip), Encryption.encrypt(EncryptionKey, profile.lastlogin))
 
-    Seq(profile)
+    Seq(profileDB)
       .toDS()
       .write
       .format(DatasetFormat)
@@ -38,9 +38,9 @@ class ProfileHandler extends Serializable{
   def createProfile(firstname: String, lastname: String, phonenumber: String, email: String, username: String, password: String, description: String, website: String, lastip: String, lastlogin: String): ProfileDB = {
     val UUID = java.util.UUID.randomUUID.toString
 
-    val profile = ProfileDB(UUID, Encryption.encrypt(EncryptionKey, firstname), Encryption.encrypt(EncryptionKey, lastname), Encryption.encrypt(EncryptionKey, phonenumber), Encryption.encrypt(EncryptionKey, email), Encryption.encrypt(EncryptionKey, username), Encryption.encrypt(EncryptionKey, password), Encryption.encrypt(EncryptionKey, description), Encryption.encrypt(EncryptionKey, website), Encryption.encrypt(EncryptionKey, lastip), Encryption.encrypt(EncryptionKey, lastlogin))
+    val profileDB = ProfileDB(UUID, Encryption.encrypt(EncryptionKey, firstname), Encryption.encrypt(EncryptionKey, lastname), Encryption.encrypt(EncryptionKey, phonenumber), Encryption.encrypt(EncryptionKey, email), Encryption.encrypt(EncryptionKey, username), Encryption.encrypt(EncryptionKey, password), Encryption.encrypt(EncryptionKey, description), Encryption.encrypt(EncryptionKey, website), Encryption.encrypt(EncryptionKey, lastip), Encryption.encrypt(EncryptionKey, lastlogin))
 
-    Seq(profile)
+    Seq(profileDB)
       .toDS()
       .write
       .format(DatasetFormat)
@@ -48,7 +48,7 @@ class ProfileHandler extends Serializable{
       .mode("append")
       .save()
 
-    profile
+    profileDB
   }
 
   /*
