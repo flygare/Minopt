@@ -12,7 +12,7 @@ REST_CONTAINER_NAME=minopt-rest-service
 # Stop, remove and start cassandra container
 docker stop $CASSANDRA_CONTAINER_NAME 2>/dev/null
 docker rm $CASSANDRA_CONTAINER_NAME 2>/dev/null
-docker run --network=host --name $CASSANDRA_CONTAINER_NAME -d $CASSANDRA_IMAGE
+docker run --network=host --name $CASSANDRA_CONTAINER_NAME -d -p 9042:9042 $CASSANDRA_IMAGE
 
 # Stop, remove and start rest service
 docker stop $REST_CONTAINER_NAME 2>/dev/null

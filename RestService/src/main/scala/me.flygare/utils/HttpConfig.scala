@@ -5,11 +5,14 @@ trait HttpConfig{
   val interface = "0.0.0.0"
   val port = 3000
 
-  val remoteAddressHost = "http://address"
+  // http://address for docker bridge
+  val remoteAddressHost = "http://192.168.0.200"
   val remoteAddressPort = 3001
-  val remotePersonHost = "http://person"
+  // http://person for docker bridge
+  val remotePersonHost = "http://192.168.0.200"
   val remotePersonPort = 3002
-  val remoteProfileHost = "http://profile"
+  // http://profile for docker bridge
+  val remoteProfileHost = "http://192.168.0.200"
   val remoteProfilePort = 3003
   val remotePath = "/dblogic"
 }
