@@ -1,15 +1,15 @@
 #!/bin/sh
 
 # Stop and clean cassandra
-service cassandra stop
-rm -rf /var/lib/cassandra/data/system/*
+service cassandra stop &> cassandra.log &
+rm -rf /var/lib/cassandra/data/system/* &> /dev/null
 
 # Start cassandra
-service cassandra start 2> cassandra.log
+service cassandra start &> cassandra.log &
 
 sleep 15
 
 # Build and execute Monolithic fat jar
 cd Monolithic/
-nohup java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic
+java -cp target/scala-2.11/monolithic.jar me.flygare.Monolithic &> mono.log &
 cd ..
